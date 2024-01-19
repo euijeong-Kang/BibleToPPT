@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.TextField?>
+<?import org.kordamp.bootstrapfx.scene.layout.Panel?>
+<?import javafx.scene.layout.HBox?>
+<?import java.lang.String?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.ej.bibletoppt.BibleToPPTController">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+  </padding>
+
+  <HBox spacing="10.0">
+    <Panel styleClass="panel-default">
+      <Label text="사이즈 선택:" styleClass="lbl lbl-default"/>
+      <ComboBox fx:id="sizeComboBox" promptText="크기 선택" styleClass="form-control">
+        <items>
+          <FXCollections fx:factory="observableArrayList">
+            <String fx:value="4:3"/>
+            <String fx:value="16:9"/>
+            <String fx:value="16:10"/>
+            <String fx:value="A4"/>
+          </FXCollections>
+        </items>
+      </ComboBox>
+    </Panel>
+
+    <Panel styleClass="panel-primary">
+      <Label text="글꼴 선택:" styleClass="lbl lbl-default"/>
+      <ComboBox fx:id="fontComboBox" promptText="글꼴 선택" styleClass="form-control">
+        <items>
+          <FXCollections fx:factory="observableArrayList">
+            <String fx:value="나눔스퀘어 Bold"/>
+            <String fx:value="휴먼옛체"/>
+            <String fx:value="굴림체"/>
+          </FXCollections>
+        </items>
+      </ComboBox>
+    </Panel>
+  </HBox>
+
+  <!-- 사용자가 ppt를 생성하고자 하는 말씀을 입력할 수 있는 입력창 추가 -->
+  <TextField fx:id="inputField" promptText="창 1:1-10, 레 1:1-5 와 같은 형태로 입력해주세요." styleClass="form-control"/>
+
+  <!-- 생성 버튼을 오른쪽 하단에 오른쪽 정렬 -->
+  <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
+    <Button text="PPT 생성" onAction="#onGeneratePPTButtonClick" styleClass="btn btn-primary btn-lg"/>
+  </HBox>
+</VBox>
