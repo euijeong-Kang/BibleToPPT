@@ -6,16 +6,18 @@ import java.sql.SQLException;
 
 public class SQLiteConnector {
 
-//    private static final String JDBC_URL = "jdbc:sqlite:identifier.sqlite";
-private static final String JDBC_URL = "jdbc:sqlite:C:/workspace/toys/BibleToPPT/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite";
+    private static final String DB_NAME = "identifier.sqlite";
     private Connection connection;
 
     public SQLiteConnector() {
         try {
             // SQLite JDBC 드라이버 로드
             Class.forName("org.sqlite.JDBC");
+            // 데이터베이스 파일 경로를 'C:\Program Files\BibleToPPT\app'로 설정
+            String dbPath = "C:/Program Files/BibleToPPT/app/" + DB_NAME;
+            String jdbcUrl = "jdbc:sqlite:" + dbPath;
             // 객체 생성 시에 연결을 수립
-            connection = DriverManager.getConnection(JDBC_URL);
+            connection = DriverManager.getConnection(jdbcUrl);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

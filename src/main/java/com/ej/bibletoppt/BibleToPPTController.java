@@ -29,6 +29,7 @@ public class BibleToPPTController {
     }
 
     private final PPTGenerator pptGenerator = new PPTGenerator();
+    private final String DEFAULT_FILE_NAME = "output.pptx";
 
     @FXML
     protected void onGeneratePPTButtonClick() {
@@ -52,13 +53,14 @@ public class BibleToPPTController {
         // 사용자로부터 저장 경로 및 이름을 선택받음
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save PowerPoint File");
-        fileChooser.setInitialFileName("output.pptx");
+        fileChooser.setInitialFileName(DEFAULT_FILE_NAME);
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PowerPoint Files", "*.pptx"));
         Stage stage = (Stage) inputField.getScene().getWindow();
         java.io.File file = fileChooser.showSaveDialog(stage);
 
         // 사용자로부터 선택 받은 정보를 PresentationRequest 객체로 묶어서 전달
-        PresentationRequest request = new PresentationRequest(bibleVerseInput, file.toPath(), SlideSizeType.fromString(selectedSize), selectedFont);
+        String mainTitle = file.getName().equals(DEFAULT_FILE_NAME) ? null : file.getName();
+        PresentationRequest request = new PresentationRequest(mainTitle, bibleVerseInput, file.toPath(), SlideSizeType.fromString(selectedSize), selectedFont);
 
         // PPT 생성 요청
         pptGenerator.createPresentation(request);
