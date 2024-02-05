@@ -10,19 +10,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;change DB connection&quot;">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/icon/logo.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/270f2306-d951-4470-96bf-157c18206794.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/270f2306-d951-4470-96bf-157c18206794/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7292e99-5d50-491e-bc3c-d28e3f40a660.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7292e99-5d50-491e-bc3c-d28e3f40a660/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/PresentationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,34 +63,35 @@
     <option name="showLibraryContents" value="true" />
     <option name="showModules" value="false" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "database.data.extractors.current.export.id": "SQL Inserts",
-    "database.data.extractors.current.id": "SQL Inserts",
-    "jdk.selected.JAVA_MODULE": "corretto-17",
-    "last_opened_file_path": "C:/workspace/toys/BibleToPPT/out/artifacts/BibleToPPT_jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;database.data.extractors.current.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspace/toys/BibleToPPT&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlite"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\workspace\toys\BibleToPPT" />
       <recent name="C:\workspace\toys\BibleToPPT\out\artifacts\BibleToPPT_jar" />
       <recent name="C:\workspace\toys\BibleToPPT\src\main\resources\com\ej\bibletoppt\icon" />
       <recent name="C:\workspace\toys\BibleToPPT\src\main\resources\com\ej\bibletoppt\db" />
@@ -196,7 +199,9 @@
       <workItem from="1705883357901" duration="2304000" />
       <workItem from="1706854559210" duration="7098000" />
       <workItem from="1706867743061" duration="85000" />
-      <workItem from="1707093159368" duration="13036000" />
+      <workItem from="1707093159368" duration="17712000" />
+      <workItem from="1707117009195" duration="86000" />
+      <workItem from="1707117102281" duration="2562000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot;change DB connection&quot;">
       <option name="closed" value="true" />

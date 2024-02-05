@@ -55,6 +55,7 @@ public class SearchBible {
                 }
             }
         } catch (SQLException e) {
+
             e.printStackTrace();
         }
         connector.closeConnection();

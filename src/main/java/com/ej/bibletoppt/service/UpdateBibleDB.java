@@ -51,6 +51,7 @@ public class UpdateBibleDB {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void processAndUpdatVerse(Connection conn, String bookChapterVerse, String sentence) {

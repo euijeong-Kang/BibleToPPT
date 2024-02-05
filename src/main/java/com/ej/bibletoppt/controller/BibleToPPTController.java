@@ -3,9 +3,12 @@ package com.ej.bibletoppt.controller;
 import com.ej.bibletoppt.BibleVerseValidator;
 import com.ej.bibletoppt.SlideSizeType;
 import com.ej.bibletoppt.controller.dto.PresentationRequest;
+import com.ej.bibletoppt.infrastructure.SQLiteConnector;
 import com.ej.bibletoppt.service.PPTGenerator;
+import com.ej.bibletoppt.service.UpdateBibleDB;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -19,8 +22,8 @@ public class BibleToPPTController {
 
     @FXML
     private TextField inputField;
-//    @FXML
-//    private Button updateDBButton;
+    @FXML
+    private Button updateDBButton;
 
     @FXML
     private ComboBox<String> sizeComboBox;
@@ -28,15 +31,16 @@ public class BibleToPPTController {
     @FXML
     private ComboBox<String> fontComboBox;
 
+//    private UpdateBibleDB updateBibleDB;
     public void initialize() {
         // 초기 선택 설정
         sizeComboBox.setValue("16:9");
         fontComboBox.setValue("나눔스퀘어 Bold");
+//        updateBibleDB = new UpdateBibleDB(new SQLiteConnector());
     }
 
     private final PPTGenerator pptGenerator = new PPTGenerator();
 
-//    private UpdateBibleDB updateBibleDB;
     private final String DEFAULT_FILE_NAME = "output.pptx";
 
 
