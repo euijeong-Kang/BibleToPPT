@@ -38,8 +38,6 @@ hs_err_pid*
 ### Project specific ###
 /target/
 /out/
-# Ignore database files if they are not needed to be shared
-/src/main/resources/com/ej/bibletoppt/db/*.sqlite
 
 # Resource files which should not be ignored
 !/src/main/resources/**/*.fxml
