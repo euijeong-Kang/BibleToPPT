@@ -1,5 +1,9 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.service;
 
+import com.ej.bibletoppt.controller.dto.PresentationRequest;
+import com.ej.bibletoppt.infrastructure.SQLiteConnector;
+import com.ej.bibletoppt.SlideSizeType;
+import com.ej.bibletoppt.TextBoxType;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
@@ -15,7 +19,7 @@ public class PPTGenerator {
     private static final String BACKGROUND_COLOR = "0x000000"; // 검은색 배경
     private static final String TEXT_COLOR = "0xFFFFFF"; // 흰색 텍스트
     private static final double TITLE_FONT_SIZE = 54;
-    private static final double BODY_FONT_SIZE = 46;
+    private static final double BODY_FONT_SIZE = 65;
     private static double SLIDE_WIDTH;
     private static double SLIDE_HEIGHT;
     private static String FONT = "나눔스퀘어 Bold";
@@ -122,7 +126,7 @@ public class PPTGenerator {
         // 텍스트 박스의 y축 위치 계산
         double textBoxY;
         if (type.equals(TextBoxType.TITLE)) {
-            textBoxY = 60;
+            textBoxY = 85;
             textBoxHeight = TITLE_FONT_SIZE * 1.5;
         } else {
             double titleHeight = 40;

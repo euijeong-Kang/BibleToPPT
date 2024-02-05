@@ -1,4 +1,6 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.controller.dto;
+
+import com.ej.bibletoppt.SlideSizeType;
 
 import java.nio.file.Path;
 

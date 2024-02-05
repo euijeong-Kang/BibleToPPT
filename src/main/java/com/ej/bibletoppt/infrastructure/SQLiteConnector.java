@@ -1,4 +1,4 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.infrastructure;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,6 +15,7 @@ public class SQLiteConnector {
             Class.forName("org.sqlite.JDBC");
             // 데이터베이스 파일 경로를 'C:\Program Files\BibleToPPT\app'로 설정
             String dbPath = "C:/Program Files/BibleToPPT/app/" + DB_NAME;
+//            String dbPath = getClass().getResource("/com/ej/bibletoppt/db/identifier.sqlite").getPath();
             String jdbcUrl = "jdbc:sqlite:" + dbPath;
             // 객체 생성 시에 연결을 수립
             connection = DriverManager.getConnection(jdbcUrl);

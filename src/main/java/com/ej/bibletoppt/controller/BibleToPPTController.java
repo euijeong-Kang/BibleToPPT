@@ -1,5 +1,9 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.controller;
 
+import com.ej.bibletoppt.BibleVerseValidator;
+import com.ej.bibletoppt.SlideSizeType;
+import com.ej.bibletoppt.controller.dto.PresentationRequest;
+import com.ej.bibletoppt.service.PPTGenerator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -15,6 +19,8 @@ public class BibleToPPTController {
 
     @FXML
     private TextField inputField;
+//    @FXML
+//    private Button updateDBButton;
 
     @FXML
     private ComboBox<String> sizeComboBox;
@@ -29,7 +35,10 @@ public class BibleToPPTController {
     }
 
     private final PPTGenerator pptGenerator = new PPTGenerator();
+
+//    private UpdateBibleDB updateBibleDB;
     private final String DEFAULT_FILE_NAME = "output.pptx";
+
 
     @FXML
     protected void onGeneratePPTButtonClick() {
@@ -95,4 +104,18 @@ public class BibleToPPTController {
             e.printStackTrace();
         }
     }
+
+    // DBUpdate를 위한
+//    @FXML
+//    protected void onUpdateDBButtonClick() {
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Open Bible Text File");
+//        Stage stage = (Stage) updateDBButton.getScene().getWindow();
+//        File file = fileChooser.showOpenDialog(stage);
+//
+//        if (file != null) {
+//            updateBibleDB.updateVersesFromFile(file.getAbsolutePath()); // 파일 경로를 updateVersesFromFile 메소드에 전달
+//            showAlert("업데이트 완료", "데이터베이스 업데이트가 성공적으로 완료되었습니다.");
+//        }
+//    }
 }

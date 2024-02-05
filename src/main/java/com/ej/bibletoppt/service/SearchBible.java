@@ -1,4 +1,6 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.service;
+
+import com.ej.bibletoppt.infrastructure.SQLiteConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +57,7 @@ public class SearchBible {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        connector.closeConnection();
         return verses;
     }
 
