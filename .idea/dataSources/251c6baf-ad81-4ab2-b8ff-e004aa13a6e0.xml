@@ -446,8 +446,8 @@
     </routine>
     <schema id="177" parent="1" name="main">
       <Current>1</Current>
-      <IntrospectionTimestamp>2024-02-05.16:18:29.122</IntrospectionTimestamp>
-      <LocalIntrospectionTimestamp>2024-02-05.07:18:29</LocalIntrospectionTimestamp>
+      <IntrospectionTimestamp>2024-02-06.10:59:23.203</IntrospectionTimestamp>
+      <LocalIntrospectionTimestamp>2024-02-06.01:59:23</LocalIntrospectionTimestamp>
     </schema>
     <argument id="178" parent="16">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1469,87 +1469,107 @@
     <argument id="517" parent="176">
       <Position>1</Position>
     </argument>
-    <table id="518" parent="177" name="bible2"/>
-    <table id="519" parent="177" name="sqlite_master">
+    <table id="518" parent="177" name="Settings"/>
+    <table id="519" parent="177" name="bible2"/>
+    <table id="520" parent="177" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="520" parent="177" name="sqlite_sequence">
+    <table id="521" parent="177" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <column id="521" parent="518" name="idx">
+    <column id="522" parent="518" name="Key">
+      <DasType>TEXT|0s</DasType>
+      <Position>1</Position>
+    </column>
+    <column id="523" parent="518" name="Value">
+      <DasType>TEXT|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <index id="524" parent="518" name="sqlite_autoindex_Settings_1">
+      <ColNames>Key</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="525" parent="518">
+      <ColNames>Key</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_Settings_1</UnderlyingIndexName>
+    </key>
+    <column id="526" parent="519" name="idx">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="522" parent="518" name="cate">
+    <column id="527" parent="519" name="cate">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="523" parent="518" name="book">
+    <column id="528" parent="519" name="book">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="524" parent="518" name="chapter">
+    <column id="529" parent="519" name="chapter">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="525" parent="518" name="paragraph">
+    <column id="530" parent="519" name="paragraph">
       <DasType>INTEGER|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="526" parent="518" name="sentence">
+    <column id="531" parent="519" name="sentence">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="527" parent="518" name="testament">
+    <column id="532" parent="519" name="testament">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="528" parent="518" name="long_label">
+    <column id="533" parent="519" name="long_label">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="529" parent="518" name="short_label">
+    <column id="534" parent="519" name="short_label">
       <DasType>TEXT|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <index id="530" parent="518" name="idx_sequense">
+    <index id="535" parent="519" name="idx_sequense">
       <ColNames>book
 chapter
 paragraph</ColNames>
     </index>
-    <column id="531" parent="519" name="type">
+    <column id="536" parent="520" name="type">
       <DasType>TEXT|0s</DasType>
       <Position>1</Position>
     </column>
-    <column id="532" parent="519" name="name">
+    <column id="537" parent="520" name="name">
       <DasType>TEXT|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="533" parent="519" name="tbl_name">
+    <column id="538" parent="520" name="tbl_name">
       <DasType>TEXT|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="534" parent="519" name="rootpage">
+    <column id="539" parent="520" name="rootpage">
       <DasType>INT|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="535" parent="519" name="sql">
+    <column id="540" parent="520" name="sql">
       <DasType>TEXT|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="536" parent="520" name="name">
+    <column id="541" parent="521" name="name">
       <Position>1</Position>
     </column>
-    <column id="537" parent="520" name="seq">
+    <column id="542" parent="521" name="seq">
       <Position>2</Position>
     </column>
   </database-model>

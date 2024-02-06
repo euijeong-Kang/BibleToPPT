@@ -4,15 +4,17 @@ import com.ej.bibletoppt.BibleVerseValidator;
 import com.ej.bibletoppt.SlideSizeType;
 import com.ej.bibletoppt.controller.dto.PresentationRequest;
 import com.ej.bibletoppt.infrastructure.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.Settings;
+import com.ej.bibletoppt.infrastructure.SettingsManager;
 import com.ej.bibletoppt.service.PPTGenerator;
-import com.ej.bibletoppt.service.UpdateBibleDB;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.scene.control.ComboBox;
 
 import java.awt.*;
 import java.io.File;
@@ -22,8 +24,8 @@ public class BibleToPPTController {
 
     @FXML
     private TextField inputField;
-    @FXML
-    private Button updateDBButton;
+//    @FXML
+//    private Button updateDBButton;
 
     @FXML
     private ComboBox<String> sizeComboBox;
@@ -31,12 +33,27 @@ public class BibleToPPTController {
     @FXML
     private ComboBox<String> fontComboBox;
 
+    @FXML
+    private CheckBox titleSlideCheckBox;
+
 //    private UpdateBibleDB updateBibleDB;
+
+
+    private SettingsManager settingsManager;
+
     public void initialize() {
+        this.settingsManager = new SettingsManager(new SQLiteConnector());
+
+        settingsManager.loadAllSettings();
+
+        initializeSettings();
+
         // 초기 선택 설정
         sizeComboBox.setValue("16:9");
-        fontComboBox.setValue("나눔스퀘어 Bold");
-//        updateBibleDB = new UpdateBibleDB(new SQLiteConnector());
+
+        titleSlideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            updateTitleSlideSetting(newValue);
+        });
     }
 
     private final PPTGenerator pptGenerator = new PPTGenerator();
@@ -72,8 +89,13 @@ public class BibleToPPTController {
         java.io.File file = fileChooser.showSaveDialog(stage);
 
         // 사용자로부터 선택 받은 정보를 PresentationRequest 객체로 묶어서 전달
-        String mainTitle = file.getName().equals(DEFAULT_FILE_NAME) ? null : file.getName();
-        PresentationRequest request = new PresentationRequest(mainTitle, bibleVerseInput, file.toPath(), SlideSizeType.fromString(selectedSize), selectedFont);
+        String mainTitle = file.getName().replace(".pptx", "");
+        PresentationRequest request = new PresentationRequest(mainTitle
+                , bibleVerseInput
+                , file.toPath()
+                , SlideSizeType.fromString(selectedSize)
+                , selectedFont
+                , titleSlideCheckBox.isSelected());
 
         // PPT 생성 요청
         pptGenerator.createPresentation(request);
@@ -108,6 +130,32 @@ public class BibleToPPTController {
             e.printStackTrace();
         }
     }
+
+    private void initializeSettings() {
+        // Title Slide Option
+        String titleSlideIncluded = settingsManager.getSetting("title_slide");
+        if (titleSlideIncluded != null) {
+            // 설정 값이 "true"이면 CheckBox를 선택된 상태로, 그렇지 않으면 선택 해제된 상태로 설정
+            titleSlideCheckBox.setSelected(Boolean.parseBoolean(titleSlideIncluded));
+        }
+
+        // Font Option
+        initializeFontComboBox();
+    }
+
+    private void updateTitleSlideSetting(boolean isSelected) {
+        // 새로운 선택 상태를 문자열로 변환하여 설정 값을 업데이트
+        settingsManager.saveSetting(new Settings("title_slide", String.valueOf(isSelected)));
+    }
+
+    private void initializeFontComboBox() {
+        ObservableList<String> fontFamilies = FXCollections.observableArrayList(Font.getFamilies());
+        fontComboBox.setItems(fontFamilies);
+
+        // 기본 폰트 설정 (예: 시스템에 Arial 폰트가 설치되어 있다고 가정)
+        fontComboBox.getSelectionModel().select("나눔스퀘어 Bold");
+    }
+
 
     // DBUpdate를 위한
 //    @FXML

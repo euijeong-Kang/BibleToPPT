@@ -38,6 +38,10 @@ public class PPTGenerator {
             setSlideSize(pptx, request.selectedSize());
             FONT = request.selectedFont();
 
+            // 제목슬라이드 추가
+            if (request.titleSlideOption()) {
+                addTitleSlide(pptx, request.mainTitle());
+            }
 
             // 검색 결과를 이용하여 각 절별로 슬라이드 추가
             for (String verse : verses) {
@@ -59,6 +63,10 @@ public class PPTGenerator {
         // 슬라이드 크기를 설정
         Dimension pageSize = new Dimension((int) (type.getWidth() * 72), (int) (type.getHeight() * 72));
         pptx.setPageSize(pageSize);
+    }
+
+    private void addTitleSlide(XMLSlideShow pptx, String mainTitle) {
+        createAndConfigureSlide(pptx, " ", mainTitle);
     }
 
     private void addVerseSlide(XMLSlideShow pptx, String verse) {

@@ -11,8 +11,8 @@
 <?import java.lang.String?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.ej.bibletoppt.controller.BibleToPPTController">
+<?import javafx.scene.control.CheckBox?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml" fx:controller="com.ej.bibletoppt.controller.BibleToPPTController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
   </padding>
@@ -34,27 +34,22 @@
 
     <Panel styleClass="panel-primary">
       <Label text="글꼴 선택:" styleClass="lbl lbl-default"/>
-      <ComboBox fx:id="fontComboBox" promptText="글꼴 선택" styleClass="form-control">
-        <items>
-          <FXCollections fx:factory="observableArrayList">
-            <String fx:value="나눔스퀘어 Bold"/>
-            <String fx:value="휴먼옛체"/>
-            <String fx:value="굴림체"/>
-          </FXCollections>
-        </items>
-      </ComboBox>
+      <ComboBox fx:id="fontComboBox" promptText="글꼴 선택" styleClass="form-control"/>
+    </Panel>
+
+    <Panel styleClass="panel-info">
+      <CheckBox fx:id="titleSlideCheckBox" text="제목 슬라이드 추가" selected="false" styleClass="form-control"/>
     </Panel>
   </HBox>
 
-  <!-- 사용자가 ppt를 생성하고자 하는 말씀을 입력할 수 있는 입력창 추가 -->
-  <TextField fx:id="inputField" promptText="창 1:1-10, 레 1:1-5 와 같은 형태로 입력해주세요." styleClass="form-control"/>
+  <TextField fx:id="inputField" promptText="창 1:1-10, 레 1:1-5 와 같은 형태로 입력해주세요." styleClass="form-control large-text-field"/>
 
-  <!-- 생성 버튼을 오른쪽 하단에 오른쪽 정렬 -->
   <HBox alignment="BOTTOM_RIGHT" spacing="10.0">
     <Button text="PPT 생성" onAction="#onGeneratePPTButtonClick" styleClass="btn btn-primary btn-lg"/>
   </HBox>
+</VBox>
 <!--DB업데이트 버튼-->
 <!--  <HBox alignment="BOTTOM_RIGHT" spacing="10.0">-->
 <!--    <Button fx:id="updateDBButton" text="DB 업데이트" onAction="#onUpdateDBButtonClick" styleClass="btn btn-info btn-lg"/>-->
 <!--  </HBox>-->
-</VBox>
+

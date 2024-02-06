@@ -10,20 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;change DB connection&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/270f2306-d951-4470-96bf-157c18206794.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/270f2306-d951-4470-96bf-157c18206794/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7292e99-5d50-491e-bc3c-d28e3f40a660.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d7292e99-5d50-491e-bc3c-d28e3f40a660/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" afterDir="false" />
     </list>
@@ -57,7 +51,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2b169xCmAiGCu9lIZOemWtjUPfQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="compactDirectories" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -202,6 +198,7 @@
       <workItem from="1707093159368" duration="17712000" />
       <workItem from="1707117009195" duration="86000" />
       <workItem from="1707117102281" duration="2562000" />
+      <workItem from="1707181579859" duration="8541000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot;change DB connection&quot;">
       <option name="closed" value="true" />

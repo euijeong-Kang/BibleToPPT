@@ -19,38 +19,61 @@ public class SQLiteConnector {
         try {
             // SQLite JDBC 드라이버 로드
             Class.forName("org.sqlite.JDBC");
-            // 데이터베이스 파일 경로를 'C:\Program Files\BibleToPPT\app'로 설정
-            File dbFile = extractDatabaseFile(DB_RESOURCE_PATH);
+            // 데이터베이스 파일을 사용자 홈 디렉토리 내의 고정된 위치로 설정
+            File dbFile = getDatabaseFile();
+            if (!dbFile.exists()) {
+                extractDatabaseFile(DB_RESOURCE_PATH, dbFile);
+            }
             String jdbcUrl = "jdbc:sqlite:" + dbFile.getAbsolutePath();
-//            String dbPath = getClass().getResource("/com/ej/bibletoppt/db/identifier.sqlite").getPath();
-////            String jdbcUrl = "jdbc:sqlite:" + dbPath;
             // 객체 생성 시에 연결을 수립
             connection = DriverManager.getConnection(jdbcUrl);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private File extractDatabaseFile(String resourcePath) throws Exception {
+
+    private File getDatabaseFile() throws Exception {
+        // 'user.home' 대신 'user.dir'을 사용하여 애플리케이션의 작업 디렉토리를 기반으로 경로를 설정할 수 있습니다.
+        String appDataPath = System.getenv("LOCALAPPDATA");
+        if (appDataPath == null) {
+            // 환경 변수에서 LOCALAPPDATA 경로를 찾을 수 없는 경우, 사용자 홈 디렉토리의 대체 경로를 사용합니다.
+            appDataPath = System.getProperty("user.home") + "\\AppData\\Local";
+        }
+        File dbDirectory = new File(appDataPath, "BibleToPPT");
+        if (!dbDirectory.exists()) {
+            if (!dbDirectory.mkdirs()) {
+                throw new Exception("Failed to create directory: " + dbDirectory.getAbsolutePath());
+            }
+        }
+        return new File(dbDirectory, DB_NAME);
+    }
+
+    private void extractDatabaseFile(String resourcePath, File dbFile) throws Exception {
         URL inputUrl = getClass().getResource(resourcePath);
         if (inputUrl == null) {
             throw new Exception("Resource not found: " + resourcePath);
         }
-        InputStream inputStream = inputUrl.openStream();
-        // 임시 파일 생성
-        File tempFile = File.createTempFile("db-", ".sqlite");
-        tempFile.deleteOnExit();
-        try (OutputStream outStream = new FileOutputStream(tempFile)) {
-            // 파일 내용 복사
+        try (InputStream inputStream = inputUrl.openStream();
+             OutputStream outStream = new FileOutputStream(dbFile)) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = inputStream.read(buffer)) > 0) {
                 outStream.write(buffer, 0, length);
             }
         }
-        return tempFile;
     }
 
     public Connection getConnection() {
+        try {
+            // 연결이 존재하지 않거나 닫혀 있으면 새로운 연결을 생성
+            if (connection == null || connection.isClosed()) {
+                String dbPath = getDatabaseFile().getAbsolutePath();
+                String url = "jdbc:sqlite:" + dbPath;
+                connection = DriverManager.getConnection(url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 
@@ -64,5 +87,4 @@ public class SQLiteConnector {
             e.printStackTrace();
         }
     }
-
 }
