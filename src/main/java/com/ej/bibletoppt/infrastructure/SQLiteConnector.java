@@ -33,18 +33,31 @@ public class SQLiteConnector {
     }
 
     private File getDatabaseFile() throws Exception {
-        // 'user.home' 대신 'user.dir'을 사용하여 애플리케이션의 작업 디렉토리를 기반으로 경로를 설정할 수 있습니다.
-        String appDataPath = System.getenv("LOCALAPPDATA");
-        if (appDataPath == null) {
-            // 환경 변수에서 LOCALAPPDATA 경로를 찾을 수 없는 경우, 사용자 홈 디렉토리의 대체 경로를 사용합니다.
-            appDataPath = System.getProperty("user.home") + "\\AppData\\Local";
+        String osName = System.getProperty("os.name").toLowerCase();
+        String userHome = System.getProperty("user.home");
+
+        File dbDirectory;
+        if (osName.contains("win")) {
+            // Windows 운영 체제인 경우
+            String appDataPath = System.getenv("LOCALAPPDATA");
+            if (appDataPath == null) {
+                appDataPath = userHome + "\\AppData\\Local";
+            }
+            dbDirectory = new File(appDataPath, "BibleToPPT");
+        } else if (osName.contains("mac")) {
+            // macOS 운영 체제인 경우
+            dbDirectory = new File(userHome, "Library/Application Support/BibleToPPT");
+        } else {
+            // 기타 운영 체제의 경우 사용자 홈 디렉토리를 기본 위치로 설정
+            dbDirectory = new File(userHome, "BibleToPPT");
         }
-        File dbDirectory = new File(appDataPath, "BibleToPPT");
+
         if (!dbDirectory.exists()) {
             if (!dbDirectory.mkdirs()) {
                 throw new Exception("Failed to create directory: " + dbDirectory.getAbsolutePath());
             }
         }
+
         return new File(dbDirectory, DB_NAME);
     }
 
