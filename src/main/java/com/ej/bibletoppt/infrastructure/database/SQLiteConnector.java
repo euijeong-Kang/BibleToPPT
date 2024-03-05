@@ -1,4 +1,4 @@
-package com.ej.bibletoppt.infrastructure;
+package com.ej.bibletoppt.infrastructure.database;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,4 +1,4 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.domain;
 
 public enum TextBoxType {
     TITLE(10, "제목"),

@@ -1,4 +1,4 @@
-package com.ej.bibletoppt;
+package com.ej.bibletoppt.domain;
 
 public enum SlideSizeType {
     WIDESCREEN_16_9(16, 9),

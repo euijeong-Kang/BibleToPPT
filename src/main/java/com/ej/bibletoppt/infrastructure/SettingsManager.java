@@ -1,5 +1,7 @@
 package com.ej.bibletoppt.infrastructure;
 
+import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,23 +31,6 @@ public class SettingsManager {
             System.out.println(e.getMessage());
         }
     }
-
-//    public Settings getSetting(String key) {
-//        String sql = "SELECT Key, Value FROM Settings WHERE Key = ?";
-//
-//        try (Connection conn = connector.getConnection();
-//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setString(1, key);
-//            ResultSet rs = pstmt.executeQuery();
-//
-//            if (rs.next()) {
-//                return new Settings(rs.getString("Key"), rs.getString("Value"));
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
-//    }
 
     public void loadAllSettings() {
         String sql = "SELECT Key, Value FROM Settings";
