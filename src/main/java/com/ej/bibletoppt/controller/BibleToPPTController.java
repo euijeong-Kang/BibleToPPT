@@ -1,12 +1,12 @@
 package com.ej.bibletoppt.controller;
 
 import com.ej.bibletoppt.BibleVerseValidator;
-import com.ej.bibletoppt.SlideSizeType;
+import com.ej.bibletoppt.domain.SlideSizeType;
 import com.ej.bibletoppt.controller.dto.PresentationRequest;
-import com.ej.bibletoppt.infrastructure.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
 import com.ej.bibletoppt.infrastructure.Settings;
 import com.ej.bibletoppt.infrastructure.SettingsManager;
-import com.ej.bibletoppt.service.PPTGenerator;
+import com.ej.bibletoppt.service.command.PPTGenerator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

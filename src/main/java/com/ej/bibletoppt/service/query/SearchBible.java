@@ -1,6 +1,6 @@
-package com.ej.bibletoppt.service;
+package com.ej.bibletoppt.service.query;
 
-import com.ej.bibletoppt.infrastructure.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

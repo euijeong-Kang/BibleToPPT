@@ -1,6 +1,6 @@
-package com.ej.bibletoppt.service;
+package com.ej.bibletoppt.infrastructure.database.command;
 
-import com.ej.bibletoppt.infrastructure.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

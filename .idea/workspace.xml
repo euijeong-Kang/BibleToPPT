@@ -9,17 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;change DB connection&quot;">
+    <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/SlideSizeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/SlideSizeType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/TextBox.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/TextBoxType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/TextBoxType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/db/identifier.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/command/UpdateBibleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +34,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi-ooxml/5.2.3/poi-ooxml-5.2.3.jar!/org/apache/poi/xslf/usermodel/XSLFSimpleShape.class" root0="SKIP_INSPECTION" />
   </component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -67,7 +75,7 @@
     &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
     &quot;database.data.extractors.current.id&quot;: &quot;SQL Inserts&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/workspace/toys/BibleToPPT&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/untitled/Account&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -76,7 +84,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -86,6 +94,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ej.bibletoppt.domain" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\workspace\toys\BibleToPPT" />
       <recent name="C:\workspace\toys\BibleToPPT\out\artifacts\BibleToPPT_jar" />
@@ -134,7 +145,7 @@
       <module name="BibleToPPT" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ej.bibletoppt.service.*" />
+          <option name="PATTERN" value="com.ej.bibletoppt.service.command.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -147,7 +158,7 @@
       <module name="BibleToPPT" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ej.bibletoppt.service.*" />
+          <option name="PATTERN" value="com.ej.bibletoppt.service.command.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -156,11 +167,11 @@
       </method>
     </configuration>
     <configuration name="SQLiteConnector" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.ej.bibletoppt.infrastructure.SQLiteConnector" />
+      <option name="MAIN_CLASS_NAME" value="com.ej.bibletoppt.infrastructure.database.SQLiteConnector" />
       <module name="BibleToPPT" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.ej.bibletoppt.service.*" />
+          <option name="PATTERN" value="com.ej.bibletoppt.service.command.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -198,7 +209,14 @@
       <workItem from="1707093159368" duration="17712000" />
       <workItem from="1707117009195" duration="86000" />
       <workItem from="1707117102281" duration="2562000" />
-      <workItem from="1707181579859" duration="8541000" />
+      <workItem from="1707181579859" duration="9256000" />
+      <workItem from="1707356200082" duration="811000" />
+      <workItem from="1707366871020" duration="3128000" />
+      <workItem from="1707785573013" duration="2189000" />
+      <workItem from="1708322050347" duration="14948000" />
+      <workItem from="1708907016354" duration="2357000" />
+      <workItem from="1709512582331" duration="44000" />
+      <workItem from="1709620278887" duration="1508000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot;change DB connection&quot;">
       <option name="closed" value="true" />
@@ -208,7 +226,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706867826279</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가">
+      <option name="closed" value="true" />
+      <created>1707211842209</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1707211842209</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -227,7 +253,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feat: &quot;change DB connection&quot;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: &quot;change DB connection&quot;" />
+    <MESSAGE value="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
