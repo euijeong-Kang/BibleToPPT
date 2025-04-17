@@ -8,8 +8,11 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class SQLiteConnector {
+public class SQLiteConnector implements ISQLiteConnector {
+    private static final Logger LOGGER = Logger.getLogger(SQLiteConnector.class.getName());
 
     private static final String DB_NAME = "identifier.sqlite";
     private static final String DB_RESOURCE_PATH = "/com/ej/bibletoppt/db/identifier.sqlite";
@@ -28,7 +31,7 @@ public class SQLiteConnector {
             // 객체 생성 시에 연결을 수립
             connection = DriverManager.getConnection(jdbcUrl);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "SQLite 연결 초기화 중 오류 발생", e);
         }
     }
 
@@ -78,14 +81,14 @@ public class SQLiteConnector {
 
     public Connection getConnection() {
         try {
-            // 연결이 존재하지 않거나 닫혀 있으면 새로운 연결을 생성
-            if (connection == null || connection.isClosed()) {
+            // 연결이 존재하지 않거나 닫혀 있거나 유효하지 않으면 새로운 연결을 생성
+            if (connection == null || connection.isClosed() || !connection.isValid(1)) {
                 String dbPath = getDatabaseFile().getAbsolutePath();
                 String url = "jdbc:sqlite:" + dbPath;
                 connection = DriverManager.getConnection(url);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "데이터베이스 연결 가져오기 중 오류 발생", e);
         }
         return connection;
     }
@@ -97,7 +100,7 @@ public class SQLiteConnector {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "데이터베이스 연결 종료 중 오류 발생", e);
         }
     }
 }

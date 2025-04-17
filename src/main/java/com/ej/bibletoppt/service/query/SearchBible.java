@@ -1,6 +1,6 @@
 package com.ej.bibletoppt.service.query;
 
-import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.database.ISQLiteConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,11 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class SearchBible {
-    private SQLiteConnector connector;
+public class SearchBible implements ISearchBible {
+    private static final Logger LOGGER = Logger.getLogger(SearchBible.class.getName());
 
-    public SearchBible(SQLiteConnector connector) {
+    private ISQLiteConnector connector;
+
+    public SearchBible(ISQLiteConnector connector) {
         this.connector = connector;
     }
 
@@ -55,10 +59,8 @@ public class SearchBible {
                 }
             }
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "성경 구절 검색 중 오류 발생", e);
         }
-        connector.closeConnection();
         return verses;
     }
 
@@ -66,8 +68,17 @@ public class SearchBible {
     private String[] extractParts(String input) {
         String[] parts = new String[2];
 
+        // 입력값 검증 추가
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("입력값이 비어 있습니다.");
+        }
+
         // 입력값에서 공백을 기준으로 책 이름과 장/절 범위 추출
         String[] inputParts = input.split(" ");
+        if (inputParts.length < 2) {
+            throw new IllegalArgumentException("올바른 형식이 아닙니다: " + input);
+        }
+
         parts[0] = inputParts[0].trim(); // 책 이름
         parts[1] = inputParts[1].trim(); // 장/절 범위
 
@@ -76,15 +87,23 @@ public class SearchBible {
 
     // chapter와 paragraph 값 설정하는 메서드
     private void setChapterAndParagraph(PreparedStatement statement, String chapterVerseRange) throws SQLException {
-        String[] rangeParts = chapterVerseRange.split(":");
-        int chapter = Integer.parseInt(rangeParts[0].replaceAll("[^0-9]", ""));
+        try {
+            String[] rangeParts = chapterVerseRange.split(":");
+            if (rangeParts.length < 2) {
+                throw new IllegalArgumentException("올바른 장/절 형식이 아닙니다: " + chapterVerseRange);
+            }
 
-        String[] verseRange = rangeParts[1].split("-");
-        int startVerse = Integer.parseInt(verseRange[0]);
-        int endVerse = (verseRange.length == 2) ? Integer.parseInt(verseRange[1]) : startVerse;
+            int chapter = Integer.parseInt(rangeParts[0].replaceAll("[^0-9]", ""));
 
-        statement.setInt(3, chapter);
-        statement.setInt(4, startVerse);
-        statement.setInt(5, endVerse);
+            String[] verseRange = rangeParts[1].split("-");
+            int startVerse = Integer.parseInt(verseRange[0]);
+            int endVerse = (verseRange.length == 2) ? Integer.parseInt(verseRange[1]) : startVerse;
+
+            statement.setInt(3, chapter);
+            statement.setInt(4, startVerse);
+            statement.setInt(5, endVerse);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("장 또는 절 번호가 유효한 숫자가 아닙니다: " + chapterVerseRange, e);
+        }
     }
 }

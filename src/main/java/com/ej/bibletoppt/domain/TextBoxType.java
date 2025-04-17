@@ -1,5 +1,7 @@
 package com.ej.bibletoppt.domain;
 
+import java.util.Optional;
+
 public enum TextBoxType {
     TITLE(10, "제목"),
 
@@ -19,12 +21,12 @@ public enum TextBoxType {
         return this.code;
     }
 
-    public static TextBoxType getByCode(int code) {
+    public static Optional<TextBoxType> getByCode(int code) {
         for (TextBoxType type : TextBoxType.values()) {
             if (type.getCode() == code) {
-                return type;
+                return Optional.of(type);
             }
         }
-        throw new IllegalArgumentException("No such TextBoxType with code: " + code);
+        return Optional.empty();
     }
 }

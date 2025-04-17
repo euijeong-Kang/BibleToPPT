@@ -10,20 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/251c6baf-ad81-4ab2-b8ff-e004aa13a6e0/storage_v2/_src_/schema/main.uQUzAA.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/SlideSizeType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/SlideSizeType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/TextBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/TextBoxType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/TextBoxType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleVerseValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleVerseValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/Presentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/Presentation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/PresentationStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/PresentationStyle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/TextBoxType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/TextBoxType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/UpdateBibleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/command/UpdateBibleDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +51,8 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="customMavenHome" value="Use Maven wrapper" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -59,7 +60,7 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2b169xCmAiGCu9lIZOemWtjUPfQ" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -69,13 +70,18 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
     &quot;database.data.extractors.current.id&quot;: &quot;SQL Inserts&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/user/Downloads/untitled/Account&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/workspace/BibleToPPT&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -85,7 +91,8 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;애플리케이션.BibleToPPTApplication.executor&quot;: &quot;Run&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;DatabaseDriversLRU&quot;: [
@@ -109,7 +116,7 @@
       <recent name="C:\workspace\toys\BibleToPPT\src\main\resources\com\ej\bibletoppt\db" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.BibleToPPTApplication">
+  <component name="RunManager" selected="애플리케이션.BibleToPPTApplication">
     <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
       <option name="appName" />
       <option name="appServicePlanName" />
@@ -181,11 +188,17 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.BibleToPPTApplication" />
-        <item itemvalue="Application.Launcher" />
-        <item itemvalue="Application.SQLiteConnector" />
+        <item itemvalue="애플리케이션.BibleToPPTApplication" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
+        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -217,6 +230,8 @@
       <workItem from="1708907016354" duration="2357000" />
       <workItem from="1709512582331" duration="44000" />
       <workItem from="1709620278887" duration="1508000" />
+      <workItem from="1744866730658" duration="3644000" />
+      <workItem from="1744870452314" duration="6417000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot;change DB connection&quot;">
       <option name="closed" value="true" />

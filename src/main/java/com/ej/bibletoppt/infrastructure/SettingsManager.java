@@ -1,6 +1,6 @@
 package com.ej.bibletoppt.infrastructure;
 
-import com.ej.bibletoppt.infrastructure.database.SQLiteConnector;
+import com.ej.bibletoppt.infrastructure.database.ISQLiteConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,13 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class SettingsManager {
+public class SettingsManager implements ISettingsManager {
+    private static final Logger LOGGER = Logger.getLogger(SettingsManager.class.getName());
 
-    private SQLiteConnector connector;
+    private ISQLiteConnector connector;
     private Map<String, String> settingsCache;
 
-    public SettingsManager(SQLiteConnector connector) {
+    public SettingsManager(ISQLiteConnector connector) {
         this.connector = connector;
         this.settingsCache = new HashMap<>();
     }
@@ -27,8 +30,7 @@ public class SettingsManager {
             pstmt.setString(2, setting.getValue());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.SEVERE, "설정 저장 중 오류 발생", e);
         }
     }
 
@@ -36,8 +38,8 @@ public class SettingsManager {
         String sql = "SELECT Key, Value FROM Settings";
 
         try (Connection conn = connector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            ResultSet rs = pstmt.executeQuery();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 String key = rs.getString("Key");
@@ -45,7 +47,7 @@ public class SettingsManager {
                 settingsCache.put(key, value);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.SEVERE, "설정 로드 중 오류 발생", e);
         }
     }
 
