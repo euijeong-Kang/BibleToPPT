@@ -5,8 +5,6 @@ import com.ej.bibletoppt.service.query.ISearchBible;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -133,11 +131,7 @@ public class BibleVerseValidator implements IBibleVerseValidator {
         String chapter = chapterVerseTokens[0];
         String[] verseTokens = chapterVerseTokens[1].split("-");
 
-        if (!isValidBook(book) || !isValidChapterVerse(chapter, verseTokens)) {
-            return false;
-        }
-
-        return true;
+        return isValidBook(book) && isValidChapterVerse(chapter, verseTokens);
     }
 
     private boolean isValidBook(String book) {

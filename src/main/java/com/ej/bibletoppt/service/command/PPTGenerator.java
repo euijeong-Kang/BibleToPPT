@@ -3,17 +3,8 @@ package com.ej.bibletoppt.service.command;
 import com.ej.bibletoppt.controller.dto.PresentationRequest;
 import com.ej.bibletoppt.domain.Presentation;
 import com.ej.bibletoppt.domain.PresentationStyle;
-import com.ej.bibletoppt.domain.SlideSizeType;
-import com.ej.bibletoppt.domain.TextBoxType;
 import com.ej.bibletoppt.service.query.ISearchBible;
-import org.apache.poi.xslf.usermodel.XMLSlideShow;
-import org.apache.poi.xslf.usermodel.XSLFSlide;
-import org.apache.poi.xslf.usermodel.XSLFTextShape;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;

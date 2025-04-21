@@ -34,9 +34,9 @@ public class Presentation {
     // 투명 색상 상수
     private static final Color TRANSPARENT_COLOR = new Color(0, 0, 0, 0);
 
-    private XMLSlideShow pptx;
+    private final XMLSlideShow pptx;
     private Dimension slideSize;
-    private PresentationStyle style;
+    private final PresentationStyle style;
 
 
     public Presentation(PresentationStyle style) {
