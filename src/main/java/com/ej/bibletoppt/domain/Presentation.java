@@ -116,8 +116,18 @@ public class Presentation {
             addTitleSlide(mainTitle);
         }
 
-        for (String verse : verses) {
-            addVerseSlide(verse);
+        // Process verses in batches to reduce memory pressure
+        final int BATCH_SIZE = 10;
+        for (int i = 0; i < verses.size(); i += BATCH_SIZE) {
+            int end = Math.min(i + BATCH_SIZE, verses.size());
+            for (int j = i; j < end; j++) {
+                addVerseSlide(verses.get(j));
+            }
+
+            // Force garbage collection after each batch if memory usage is high
+            if (Runtime.getRuntime().freeMemory() < Runtime.getRuntime().totalMemory() * 0.2) {
+                System.gc();
+            }
         }
 
         try {

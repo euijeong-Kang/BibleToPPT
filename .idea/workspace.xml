@@ -11,15 +11,16 @@
   <component name="ChangeListManager">
     <list default="true" id="f083f123-df7f-4151-83c5-e682b07d265a" name="Changes" comment="Feat: &quot;Add title slide&quot;&#10;&#10; - 타이틀 슬라이드 옵션 추가&#10; - 폰트 설정 추가&#10; - 옵션관련 테이블 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleToPPTApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleVerseValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/BibleVerseValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/BibleToPPTController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/controller/dto/PresentationRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/Presentation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/Presentation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/SettingsManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/command/UpdateBibleDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/command/UpdateBibleDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/PresentationStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/domain/PresentationStyle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/infrastructure/database/SQLiteConnector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/command/PPTGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ej/bibletoppt/service/query/SearchBible.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/ej/bibletoppt/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +87,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;database.data.extractors.current.export.id&quot;: &quot;SQL Inserts&quot;,
     &quot;database.data.extractors.current.id&quot;: &quot;SQL Inserts&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feat/prepare-backend-integration&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feat/prepare-update-check&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-17&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
@@ -241,7 +242,9 @@
       <workItem from="1709620278887" duration="1508000" />
       <workItem from="1744866730658" duration="3644000" />
       <workItem from="1744870452314" duration="6417000" />
-      <workItem from="1745198610882" duration="8867000" />
+      <workItem from="1745198610882" duration="10211000" />
+      <workItem from="1745215046071" duration="4998000" />
+      <workItem from="1745220972639" duration="3482000" />
     </task>
     <task id="LOCAL-00001" summary="Feat: &quot;change DB connection&quot;">
       <option name="closed" value="true" />

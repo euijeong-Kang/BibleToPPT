@@ -7,6 +7,7 @@ import com.ej.bibletoppt.infrastructure.ISettingsManager;
 import com.ej.bibletoppt.infrastructure.di.DependencyContainer;
 import com.ej.bibletoppt.service.IBibleVerseValidator;
 import com.ej.bibletoppt.service.command.IPPTGenerator;
+import com.ej.bibletoppt.service.query.ISearchBible;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,6 +32,7 @@ import java.net.URI;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -45,6 +47,9 @@ public class BibleToPPTController {
 
     @FXML
     private ComboBox<String> fontComboBox;
+
+    @FXML
+    private ComboBox<String> fontSizeComboBox;
 
     @FXML
     private CheckBox titleSlideCheckBox;
@@ -67,6 +72,7 @@ public class BibleToPPTController {
     private final ISettingsManager settingsManager;
     private final IPPTGenerator pptGenerator;
     private final IBibleVerseValidator bibleVerseValidator;
+    private final ISearchBible searchBible;
 
     private String currentVerses = "";
     private final ObservableList<VerseItem> verseItems = FXCollections.observableArrayList();
@@ -77,6 +83,7 @@ public class BibleToPPTController {
         this.settingsManager = container.getSettingsManager();
         this.pptGenerator = container.getPPTGenerator();
         this.bibleVerseValidator = container.getBibleVerseValidator();
+        this.searchBible = container.getSearchBible();
     }
 
     public void initialize() {
@@ -297,34 +304,76 @@ public class BibleToPPTController {
         HBox verseItemContainer = new HBox();
         verseItemContainer.setSpacing(10);
         verseItemContainer.setAlignment(Pos.CENTER_LEFT);
-        verseItemContainer.setPrefWidth(260);
-        verseItemContainer.setStyle("-fx-padding: 5; -fx-background-color: #F9F7FD; -fx-background-radius: 4;");
+        verseItemContainer.setPrefWidth(280);
+        verseItemContainer.setStyle("-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 8; " +
+                                   "-fx-border-color: #E9ECEF; -fx-border-radius: 8; " +
+                                   "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 1);");
 
         // 구절 텍스트 레이블
         Label verseLabel = new Label(item.getText());
-        verseLabel.setStyle("-fx-font-weight: bold;");
-        verseLabel.setPrefWidth(160);
+        verseLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #212529; -fx-font-size: 13;");
+        verseLabel.setPrefWidth(170);
+        verseLabel.setWrapText(true);
+
+        // 버튼 컨테이너
+        HBox buttonContainer = new HBox();
+        buttonContainer.setSpacing(5);
+        buttonContainer.setAlignment(Pos.CENTER_RIGHT);
 
         // 삭제 버튼
-        Button removeButton = new Button("X");
-        removeButton.setStyle("-fx-background-color: #FFCCCC; -fx-text-fill: #333333; -fx-font-weight: bold; " +
-                             "-fx-background-radius: 10; -fx-min-width: 20; -fx-min-height: 20; -fx-padding: 0;");
+        Button removeButton = new Button("✕");
+        removeButton.setStyle("-fx-background-color: #F8D7DA; -fx-text-fill: #721C24; -fx-font-weight: bold; " +
+                             "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                             "-fx-cursor: hand;");
         removeButton.setOnAction(e -> removeVerse(item));
+
+        // 마우스 오버 효과
+        removeButton.setOnMouseEntered(e -> 
+            removeButton.setStyle("-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-font-weight: bold; " +
+                                 "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                                 "-fx-cursor: hand;"));
+        removeButton.setOnMouseExited(e -> 
+            removeButton.setStyle("-fx-background-color: #F8D7DA; -fx-text-fill: #721C24; -fx-font-weight: bold; " +
+                                 "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                                 "-fx-cursor: hand;"));
 
         // 위로 이동 버튼
         Button upButton = new Button("▲");
-        upButton.setStyle("-fx-background-color: #E6E6E6; -fx-text-fill: #333333; -fx-font-weight: bold; " +
-                         "-fx-background-radius: 4; -fx-min-width: 20; -fx-min-height: 20; -fx-padding: 0;");
+        upButton.setStyle("-fx-background-color: #E2E6EA; -fx-text-fill: #495057; -fx-font-weight: bold; " +
+                         "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                         "-fx-cursor: hand;");
         upButton.setOnAction(e -> moveVerseUp(item));
+
+        // 마우스 오버 효과
+        upButton.setOnMouseEntered(e -> 
+            upButton.setStyle("-fx-background-color: #CED4DA; -fx-text-fill: #212529; -fx-font-weight: bold; " +
+                             "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                             "-fx-cursor: hand;"));
+        upButton.setOnMouseExited(e -> 
+            upButton.setStyle("-fx-background-color: #E2E6EA; -fx-text-fill: #495057; -fx-font-weight: bold; " +
+                             "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                             "-fx-cursor: hand;"));
 
         // 아래로 이동 버튼
         Button downButton = new Button("▼");
-        downButton.setStyle("-fx-background-color: #E6E6E6; -fx-text-fill: #333333; -fx-font-weight: bold; " +
-                           "-fx-background-radius: 4; -fx-min-width: 20; -fx-min-height: 20; -fx-padding: 0;");
+        downButton.setStyle("-fx-background-color: #E2E6EA; -fx-text-fill: #495057; -fx-font-weight: bold; " +
+                           "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                           "-fx-cursor: hand;");
         downButton.setOnAction(e -> moveVerseDown(item));
 
+        // 마우스 오버 효과
+        downButton.setOnMouseEntered(e -> 
+            downButton.setStyle("-fx-background-color: #CED4DA; -fx-text-fill: #212529; -fx-font-weight: bold; " +
+                               "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                               "-fx-cursor: hand;"));
+        downButton.setOnMouseExited(e -> 
+            downButton.setStyle("-fx-background-color: #E2E6EA; -fx-text-fill: #495057; -fx-font-weight: bold; " +
+                               "-fx-background-radius: 4; -fx-min-width: 28; -fx-min-height: 28; -fx-padding: 0; " +
+                               "-fx-cursor: hand;"));
+
         // 컨테이너에 컴포넌트 추가
-        verseItemContainer.getChildren().addAll(verseLabel, removeButton, upButton, downButton);
+        buttonContainer.getChildren().addAll(removeButton, upButton, downButton);
+        verseItemContainer.getChildren().addAll(verseLabel, buttonContainer);
 
         // 구절 관리 목록에 추가
         verseManagementList.getChildren().add(verseItemContainer);
@@ -447,18 +496,45 @@ public class BibleToPPTController {
         // 기존 내용 제거
         previewPane.getChildren().clear();
 
+        // 슬라이드 비율 유지 (16:9)
+        double aspectRatio = 16.0 / 9.0;
+        double width = previewPane.getPrefWidth() - 60;
+        double height = width / aspectRatio;
+
+        // 슬라이드가 너무 크면 높이 기준으로 조정
+        if (height > previewPane.getPrefHeight() - 60) {
+            height = previewPane.getPrefHeight() - 60;
+            width = height * aspectRatio;
+        }
+
         // 슬라이드 배경 생성 (검은색 배경)
-        javafx.scene.layout.Pane slideBackground = new javafx.scene.layout.Pane();
-        slideBackground.setPrefSize(previewPane.getPrefWidth() - 40, previewPane.getPrefHeight() - 40);
-        slideBackground.setStyle("-fx-background-color: #000000; -fx-background-radius: 5;");
+        javafx.scene.layout.StackPane slideBackground = new javafx.scene.layout.StackPane();
+        slideBackground.setPrefSize(width, height);
+        slideBackground.setStyle("-fx-background-color: #000000; -fx-background-radius: 8; " +
+                                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);");
+
+        // 슬라이드 내용을 담을 컨테이너
+        javafx.scene.layout.VBox slideContent = new javafx.scene.layout.VBox();
+        slideContent.setAlignment(Pos.TOP_LEFT);
+        slideContent.setSpacing(20);
+        slideContent.setPadding(new javafx.geometry.Insets(30, 40, 30, 40));
+        slideContent.setPrefWidth(width - 20);
+        slideContent.setMaxWidth(width - 20);
 
         if (currentVerses.isEmpty()) {
             // 구절이 없는 경우 안내 메시지 표시
+            javafx.scene.layout.VBox emptyContent = new javafx.scene.layout.VBox();
+            emptyContent.setAlignment(Pos.CENTER);
+            emptyContent.setPrefSize(width, height);
+
             javafx.scene.control.Label noVersesLabel = new javafx.scene.control.Label("선택된 구절 없음");
-            noVersesLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white;");
-            noVersesLabel.setLayoutX(slideBackground.getPrefWidth() / 2 - 80);
-            noVersesLabel.setLayoutY(slideBackground.getPrefHeight() / 2 - 10);
-            slideBackground.getChildren().add(noVersesLabel);
+            noVersesLabel.setStyle("-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: white;");
+
+            javafx.scene.control.Label instructionLabel = new javafx.scene.control.Label("왼쪽에서 성경 구절을 입력하세요");
+            instructionLabel.setStyle("-fx-font-size: 16; -fx-text-fill: #ADB5BD;");
+
+            emptyContent.getChildren().addAll(noVersesLabel, instructionLabel);
+            slideBackground.getChildren().add(emptyContent);
         } else {
             // 구절이 있는 경우 구절 표시
             String[] parts = currentVerses.split(",");
@@ -466,22 +542,55 @@ public class BibleToPPTController {
                 // 첫 번째 구절의 참조 부분을 제목으로 표시
                 String reference = parts[0].trim();
                 javafx.scene.control.Label titleLabel = new javafx.scene.control.Label(reference);
-                titleLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: white;");
-                titleLabel.setLayoutX(20);
-                titleLabel.setLayoutY(20);
-                slideBackground.getChildren().add(titleLabel);
+                titleLabel.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
+                titleLabel.setWrapText(true);
+                titleLabel.setPrefWidth(width - 80);
+                slideContent.getChildren().add(titleLabel);
 
-                // 모든 구절을 내용으로 표시
-                javafx.scene.control.Label contentLabel = new javafx.scene.control.Label(currentVerses);
-                contentLabel.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: white; -fx-wrap-text: true;");
-                contentLabel.setPrefWidth(slideBackground.getPrefWidth() - 40);
-                contentLabel.setLayoutX(20);
-                contentLabel.setLayoutY(60);
-                slideBackground.getChildren().add(contentLabel);
+                // 첫 번째 구절의 실제 내용을 가져오기
+                List<String> verseTexts = searchBible.searchVerses(reference);
+                String verseContent = "";
+
+                if (!verseTexts.isEmpty()) {
+                    // 첫 번째 구절의 내용 추출 (& 이후의 텍스트)
+                    String fullVerse = verseTexts.get(0);
+                    String[] verseParts = fullVerse.split("&", 2);
+                    if (verseParts.length > 1) {
+                        verseContent = verseParts[1].trim();
+                    }
+                }
+
+                // 구절 내용 표시를 위한 스크롤 패널
+                javafx.scene.control.ScrollPane scrollPane = new javafx.scene.control.ScrollPane();
+                scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; -fx-padding: 0;");
+                scrollPane.setFitToWidth(true);
+                scrollPane.setPrefHeight(height - 100);
+
+                // 구절 내용을 담을 VBox
+                javafx.scene.layout.VBox versesContainer = new javafx.scene.layout.VBox();
+                versesContainer.setSpacing(15);
+
+                // 첫 번째 구절의 실제 내용 표시
+                if (!verseContent.isEmpty()) {
+                    javafx.scene.control.Label contentLabel = new javafx.scene.control.Label(verseContent);
+                    contentLabel.setStyle("-fx-font-size: 18; -fx-font-weight: normal; -fx-text-fill: white; -fx-wrap-text: true;");
+                    contentLabel.setWrapText(true);
+                    contentLabel.setPrefWidth(width - 100);
+                    versesContainer.getChildren().add(contentLabel);
+                }
+
+                // 프리뷰에는 첫번째 구절만 표시하고 이후 구절은 표시하지 않음
+                // 이슈 요구사항: 프리뷰에는 첫번째로 찾고자 하는 구문만 표시
+
+                scrollPane.setContent(versesContainer);
+                slideContent.getChildren().add(scrollPane);
             }
+
+            slideBackground.getChildren().add(slideContent);
         }
 
-        // 미리보기 영역에 슬라이드 추가
+        // 미리보기 영역에 슬라이드 추가 (중앙 정렬)
+        previewPane.setAlignment(Pos.CENTER);
         previewPane.getChildren().add(slideBackground);
     }
 
@@ -522,9 +631,20 @@ public class BibleToPPTController {
             return;
         }
 
-        // 사용자가 선택한 크기 및 글꼴 가져오기
+        // 사용자가 선택한 크기, 글꼴, 글자 크기 가져오기
         String selectedSize = sizeComboBox.getValue();
         String selectedFont = fontComboBox.getValue();
+        String selectedFontSize = fontSizeComboBox.getValue();
+
+        // 글자 크기 기본값 설정
+        double bodyFontSize = 65.0; // 기본값
+        if (selectedFontSize != null && !selectedFontSize.isEmpty()) {
+            try {
+                bodyFontSize = Double.parseDouble(selectedFontSize);
+            } catch (NumberFormatException e) {
+                LOGGER.log(Level.WARNING, "글자 크기 변환 중 오류 발생", e);
+            }
+        }
 
         // 사용자로부터 저장 경로 및 이름을 선택받음
         FileChooser fileChooser = new FileChooser();
@@ -546,7 +666,8 @@ public class BibleToPPTController {
                 , file.toPath()
                 , SlideSizeType.fromString(selectedSize)
                 , selectedFont
-                , titleSlideCheckBox.isSelected());
+                , titleSlideCheckBox.isSelected()
+                , bodyFontSize);
 
         // PPT 생성 요청
         try {
@@ -642,6 +763,32 @@ public class BibleToPPTController {
 
         // Font Option
         initializeFontComboBox();
+
+        // Font Size Option
+        initializeFontSizeComboBox();
+    }
+
+    private void initializeFontSizeComboBox() {
+        // 일반적인 글자 크기 옵션 추가
+        ObservableList<String> fontSizes = FXCollections.observableArrayList(
+            "36", "40", "44", "48", "54", "60", "65", "72", "80", "88", "96"
+        );
+        fontSizeComboBox.setItems(fontSizes);
+
+        // 기본 글자 크기 설정
+        String savedFontSize = settingsManager.getSetting("body_font_size");
+        if (savedFontSize != null) {
+            fontSizeComboBox.getSelectionModel().select(savedFontSize);
+        } else {
+            fontSizeComboBox.getSelectionModel().select("65"); // 기본값
+        }
+
+        // 글자 크기 변경 시 설정 저장
+        fontSizeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                settingsManager.saveSetting(new Settings("body_font_size", newValue));
+            }
+        });
     }
 
     private void updateTitleSlideSetting(boolean isSelected) {

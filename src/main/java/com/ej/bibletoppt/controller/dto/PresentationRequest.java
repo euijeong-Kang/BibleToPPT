@@ -10,5 +10,6 @@ public record PresentationRequest(
         Path outputPath,
         SlideSizeType selectedSize,
         String selectedFont,
-        boolean titleSlideOption) {
+        boolean titleSlideOption,
+        double bodyFontSize) {
 }
