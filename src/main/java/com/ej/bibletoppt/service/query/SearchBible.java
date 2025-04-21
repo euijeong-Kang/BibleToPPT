@@ -14,7 +14,7 @@ import java.util.logging.Level;
 public class SearchBible implements ISearchBible {
     private static final Logger LOGGER = Logger.getLogger(SearchBible.class.getName());
 
-    private ISQLiteConnector connector;
+    private final ISQLiteConnector connector;
 
     public SearchBible(ISQLiteConnector connector) {
         this.connector = connector;

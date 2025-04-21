@@ -2,12 +2,15 @@ package com.ej.bibletoppt.infrastructure;
 
 import com.ej.bibletoppt.infrastructure.database.ISQLiteConnector;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -35,6 +38,17 @@ public class SettingsManager implements ISettingsManager {
     }
 
     public void loadAllSettings() {
+        // 데이터베이스에서 설정 로드
+        loadSettingsFromDatabase();
+
+        // 프로퍼티 파일에서 설정 로드
+        loadSettingsFromProperties();
+    }
+
+    /**
+     * 데이터베이스에서 설정을 로드합니다.
+     */
+    private void loadSettingsFromDatabase() {
         String sql = "SELECT Key, Value FROM Settings";
 
         try (Connection conn = connector.getConnection();
@@ -47,7 +61,32 @@ public class SettingsManager implements ISettingsManager {
                 settingsCache.put(key, value);
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "설정 로드 중 오류 발생", e);
+            LOGGER.log(Level.SEVERE, "데이터베이스에서 설정 로드 중 오류 발생", e);
+        }
+    }
+
+    /**
+     * 프로퍼티 파일에서 설정을 로드합니다.
+     */
+    private void loadSettingsFromProperties() {
+        Properties properties = new Properties();
+
+        try (InputStream input = getClass().getClassLoader().getResourceAsStream("application.properties")) {
+            if (input != null) {
+                properties.load(input);
+
+                // 프로퍼티를 설정 캐시에 추가
+                for (String key : properties.stringPropertyNames()) {
+                    String value = properties.getProperty(key);
+                    settingsCache.put(key, value);
+                }
+
+                LOGGER.info("프로퍼티 파일에서 설정을 로드했습니다.");
+            } else {
+                LOGGER.warning("application.properties 파일을 찾을 수 없습니다.");
+            }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "프로퍼티 파일에서 설정 로드 중 오류 발생", e);
         }
     }
 

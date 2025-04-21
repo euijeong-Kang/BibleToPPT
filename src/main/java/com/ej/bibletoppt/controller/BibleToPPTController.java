@@ -16,20 +16,21 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
+import javafx.scene.web.WebView;
+import javafx.scene.web.WebEngine;
+import javafx.concurrent.Worker;
+
+import java.net.URI;
 
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -59,14 +60,16 @@ public class BibleToPPTController {
     private Label previewLabel;
 
     @FXML
-    private Pane adPlaceholder;
+    private WebView adWebView;
+
+    private WebEngine webEngine;
 
     private final ISettingsManager settingsManager;
     private final IPPTGenerator pptGenerator;
     private final IBibleVerseValidator bibleVerseValidator;
 
     private String currentVerses = "";
-    private ObservableList<VerseItem> verseItems = FXCollections.observableArrayList();
+    private final ObservableList<VerseItem> verseItems = FXCollections.observableArrayList();
 
     public BibleToPPTController() {
         // 의존성 주입 컨테이너에서 서비스 가져오기
@@ -94,8 +97,8 @@ public class BibleToPPTController {
         // 구절 관리 목록 초기화
         initializeVerseManagementList();
 
-        // 광고 영역 초기화 (실제 광고 로직은 여기에 추가)
-        // 현재는 플레이스홀더만 표시
+        // 광고 영역 초기화
+        initializeWebView();
     }
 
     /**
@@ -104,6 +107,134 @@ public class BibleToPPTController {
     private void initializeVerseManagementList() {
         // 기존 항목 제거
         verseManagementList.getChildren().clear();
+    }
+
+    /**
+     * 광고 영역의 WebView를 초기화합니다.
+     */
+    private void initializeWebView() {
+        webEngine = adWebView.getEngine();
+
+        // 외부 웹페이지 로드
+        loadAdvertisement();
+
+        // 오류 처리
+        webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.FAILED) {
+                System.err.println("웹페이지 로드 실패");
+                // 오류 발생 시 대체 콘텐츠 표시
+                webEngine.loadContent("<html><body><h3>광고를 불러올 수 없습니다.</h3></body></html>");
+            }
+        });
+
+        // 자바스크립트 활성화
+        webEngine.setJavaScriptEnabled(true);
+
+        // 보안 정책 설정
+        webEngine.setUserAgent("Mozilla/5.0 JavaFX WebView");
+
+        // 외부 링크를 시스템 브라우저에서 열기
+        webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && !newValue.equals(getAdUrl())) {
+                webEngine.load(getAdUrl()); // 원래 광고 URL로 되돌리기
+
+                // 시스템 브라우저에서 링크 열기
+                try {
+                    Desktop.getDesktop().browse(new URI(newValue));
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "외부 링크 열기 실패", e);
+                }
+            }
+        });
+    }
+
+    /**
+     * 광고 URL을 가져옵니다.
+     * 
+     * @return 광고 URL
+     */
+    private String getAdUrl() {
+        // 설정에서 광고 URL 가져오기
+        String adUrl = settingsManager.getSetting("adUrl");
+
+        // 설정이 없으면 기본 URL 사용
+        if (adUrl == null || adUrl.isEmpty()) {
+            adUrl = "https://example.com/ads";
+        }
+
+        return adUrl;
+    }
+
+    /**
+     * 광고를 로드합니다.
+     */
+    private void loadAdvertisement() {
+        // HTML 콘텐츠 직접 로드
+        String htmlContent = "<!DOCTYPE html>\n" +
+                "<html lang=\"ko\">\n" +
+                "<head>\n" +
+                "  <meta charset=\"UTF-8\">\n" +
+                "  <title>쿠팡 파트너스 광고 모음</title>\n" +
+                "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "  <style>\n" +
+                "    body {\n" +
+                "      margin: 0;\n" +
+                "      padding: 15px 10px;\n" +
+                "      background: #ffffff;\n" +
+                "      font-family: sans-serif;\n" +
+                "      display: flex;\n" +
+                "      flex-direction: column;\n" +
+                "      align-items: center;\n" +
+                "      gap: 15px;\n" +
+                "    }\n" +
+                "\n" +
+                "    iframe {\n" +
+                "      border: none;\n" +
+                "    }\n" +
+                "  </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "\n" +
+                "  <!-- ✅ 1번 광고 (iframe 형식) -->\n" +
+                "  <iframe src=\"https://coupa.ng/chXv11\"\n" +
+                "          width=\"100%\" height=\"75\"\n" +
+                "          frameborder=\"0\"\n" +
+                "          scrolling=\"no\"\n" +
+                "          referrerpolicy=\"unsafe-url\"\n" +
+                "          browsingtopics>\n" +
+                "  </iframe>\n" +
+                "\n" +
+                "  <!-- ✅ 2번 광고 (carousel, 세로형 슬라이드) -->\n" +
+                "  <div id=\"ad-carousel\">\n" +
+                "    <script src=\"https://ads-partners.coupang.com/g.js\"></script>\n" +
+                "    <script>\n" +
+                "      new PartnersCoupang.G({\n" +
+                "        \"id\": 858529,\n" +
+                "        \"template\": \"carousel\",\n" +
+                "        \"trackingCode\": \"AF9908602\",\n" +
+                "        \"width\": \"240\",\n" +
+                "        \"height\": \"580\"\n" +
+                "      });\n" +
+                "    </script>\n" +
+                "  </div>\n" +
+                "\n" +
+                "  <!-- ✅ 3번 광고 (banner, 가로형 배너) -->\n" +
+                "  <div id=\"ad-banner\">\n" +
+                "    <script>\n" +
+                "      new PartnersCoupang.G({\n" +
+                "        \"id\": 858545,\n" +
+                "        \"template\": \"banner\",\n" +
+                "        \"trackingCode\": \"AF9908602\",\n" +
+                "        \"width\": \"320\",\n" +
+                "        \"height\": \"100\"\n" +
+                "      });\n" +
+                "    </script>\n" +
+                "  </div>\n" +
+                "\n" +
+                "</body>\n" +
+                "</html>";
+
+        webEngine.loadContent(htmlContent);
     }
 
 

@@ -5,14 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.web.WebView?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.ej.bibletoppt.controller.BibleToPPTController"
             style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FDFDFE, #FFFFFF); -fx-opacity: 0.96;">
@@ -34,13 +33,13 @@
                     <ComboBox fx:id="fontComboBox" promptText="글꼴 선택" styleClass="form-control"/>
                 </HBox>
 
-                <CheckBox fx:id="titleSlideCheckBox" text="제목 슬라이드 추가" selected="false"
+                <CheckBox fx:id="titleSlideCheckBox" text="제목 슬라이드 추가"
                           style="-fx-text-fill: #333333;"/>
             </VBox>
 
             <!-- Bible Verse Input -->
             <Label text="성경구절 입력" style="-fx-font-weight: bold; -fx-padding: 5 0 0 0;"/>
-            <VBox spacing="0">
+            <VBox>
                 <TextField fx:id="inputField" promptText="성경구절 입력 (예: 창 1:1)"
                            style="-fx-background-color: white; -fx-border-color: #E6DFFA; -fx-border-radius: 4; -fx-font-size: 16px; -fx-padding: 8;"/>
             </VBox>
@@ -80,7 +79,7 @@
 
             <!-- Clear Button -->
             <Button text="지우기" onAction="#onClearButtonClick"
-                    style="-fx-background-color: #E6DFFA; -fx-text-fill: #333333; -fx-font-weight: bold;
+                    style="-fx-background-color: #eee8fa; -fx-text-fill: #333333; -fx-font-weight: bold;
                            -fx-background-radius: 4; -fx-padding: 8 16; -fx-cursor: hand;
                            -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 1);"/>
         </VBox>
@@ -88,18 +87,10 @@
 
     <!-- Right Panel - Advertisement -->
     <right>
-        <VBox spacing="5.0" prefWidth="250" style="-fx-background-color: #F6F3FB; -fx-padding: 15;">
-            <Label text="" style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #9A8FCB;"/>
+        <VBox spacing="5.0" prefWidth="380" style="-fx-background-color: #F6F3FB; -fx-padding: 15;">
 
-            <!-- Ad Placeholder -->
-            <Pane fx:id="adPlaceholder" prefHeight="400" style="-fx-background-color: #EFEAFA; -fx-border-color: #e0d5f1; -fx-border-radius: 4;">
-                <Label text=""
-                       style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #9A8FCB; -fx-padding: 180 0 0 60;"/>
-            </Pane>
-
-            <!-- Disclaimer -->
-            <Label text=""
-                   style="-fx-font-size: 10; -fx-text-fill: #9A8FCB; -fx-padding: 5 0 0 0;"/>
+            <!-- Ad WebView -->
+            <WebView fx:id="adWebView" prefHeight="830" prefWidth="380" />
         </VBox>
     </right>
 

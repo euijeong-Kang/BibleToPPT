@@ -41,7 +41,7 @@ public class UpdateBibleDB {
                     line = line.substring(matcher.end()).trim(); // 실제 성경 구절 내용만 추출
                 }
                 // 성경 구절 내용 추가
-                if (sentenceBuilder.length() > 0) sentenceBuilder.append(" ");
+                if (!sentenceBuilder.isEmpty()) sentenceBuilder.append(" ");
                 sentenceBuilder.append(line);
             }
             // 마지막 구절 업데이트
