@@ -4,8 +4,11 @@ import com.ej.bibletoppt.domain.SlideSizeType;
 import com.ej.bibletoppt.controller.dto.PresentationRequest;
 import com.ej.bibletoppt.infrastructure.Settings;
 import com.ej.bibletoppt.infrastructure.ISettingsManager;
-import com.ej.bibletoppt.infrastructure.di.DependencyContainer;
+import com.ej.bibletoppt.infrastructure.di.ServiceConfiguration;
+import com.ej.bibletoppt.infrastructure.di.ServiceLocator;
 import com.ej.bibletoppt.service.IBibleVerseValidator;
+import com.ej.bibletoppt.service.IPreviewService;
+import com.ej.bibletoppt.service.IVerseManagementService;
 import com.ej.bibletoppt.service.command.IPPTGenerator;
 import com.ej.bibletoppt.service.query.ISearchBible;
 import javafx.collections.FXCollections;
@@ -73,26 +76,27 @@ public class BibleToPPTController {
     private final IPPTGenerator pptGenerator;
     private final IBibleVerseValidator bibleVerseValidator;
     private final ISearchBible searchBible;
+    private final IVerseManagementService verseManagementService;
+    private final IPreviewService previewService;
 
     private String currentVerses = "";
     private final ObservableList<VerseItem> verseItems = FXCollections.observableArrayList();
 
     public BibleToPPTController() {
-        // 의존성 주입 컨테이너에서 서비스 가져오기
-        DependencyContainer container = DependencyContainer.getInstance();
-        this.settingsManager = container.getSettingsManager();
-        this.pptGenerator = container.getPPTGenerator();
-        this.bibleVerseValidator = container.getBibleVerseValidator();
-        this.searchBible = container.getSearchBible();
+        // 서비스 로케이터에서 서비스 가져오기
+        ServiceLocator serviceLocator = ServiceConfiguration.getServiceLocator();
+        this.settingsManager = serviceLocator.get(ISettingsManager.class);
+        this.pptGenerator = serviceLocator.get(IPPTGenerator.class);
+        this.bibleVerseValidator = serviceLocator.get(IBibleVerseValidator.class);
+        this.searchBible = serviceLocator.get(ISearchBible.class);
+        this.verseManagementService = serviceLocator.get(IVerseManagementService.class);
+        this.previewService = serviceLocator.get(IPreviewService.class);
     }
 
     public void initialize() {
         settingsManager.loadAllSettings();
 
         initializeSettings();
-
-        // 초기 선택 설정
-        sizeComboBox.setValue("16:9");
 
         titleSlideCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             updateTitleSlideSetting(newValue);
@@ -157,11 +161,13 @@ public class BibleToPPTController {
 
     /**
      * 광고 URL을 가져옵니다.
+     * 먼저 application.properties 파일에서 adUrl 속성을 찾고,
+     * 없는 경우 기본 URL을 사용합니다.
      * 
      * @return 광고 URL
      */
     private String getAdUrl() {
-        // 설정에서 광고 URL 가져오기
+        // application.properties에서 광고 URL 가져오기
         String adUrl = settingsManager.getSetting("adUrl");
 
         // 설정이 없으면 기본 URL 사용
@@ -174,74 +180,14 @@ public class BibleToPPTController {
 
     /**
      * 광고를 로드합니다.
+     * application.properties에서 설정된 adUrl을 사용합니다.
      */
     private void loadAdvertisement() {
-        // HTML 콘텐츠 직접 로드
-        String htmlContent = "<!DOCTYPE html>\n" +
-                "<html lang=\"ko\">\n" +
-                "<head>\n" +
-                "  <meta charset=\"UTF-8\">\n" +
-                "  <title>쿠팡 파트너스 광고 모음</title>\n" +
-                "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "  <style>\n" +
-                "    body {\n" +
-                "      margin: 0;\n" +
-                "      padding: 15px 10px;\n" +
-                "      background: #ffffff;\n" +
-                "      font-family: sans-serif;\n" +
-                "      display: flex;\n" +
-                "      flex-direction: column;\n" +
-                "      align-items: center;\n" +
-                "      gap: 15px;\n" +
-                "    }\n" +
-                "\n" +
-                "    iframe {\n" +
-                "      border: none;\n" +
-                "    }\n" +
-                "  </style>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "\n" +
-                "  <!-- ✅ 1번 광고 (iframe 형식) -->\n" +
-                "  <iframe src=\"https://coupa.ng/chXv11\"\n" +
-                "          width=\"100%\" height=\"75\"\n" +
-                "          frameborder=\"0\"\n" +
-                "          scrolling=\"no\"\n" +
-                "          referrerpolicy=\"unsafe-url\"\n" +
-                "          browsingtopics>\n" +
-                "  </iframe>\n" +
-                "\n" +
-                "  <!-- ✅ 2번 광고 (carousel, 세로형 슬라이드) -->\n" +
-                "  <div id=\"ad-carousel\">\n" +
-                "    <script src=\"https://ads-partners.coupang.com/g.js\"></script>\n" +
-                "    <script>\n" +
-                "      new PartnersCoupang.G({\n" +
-                "        \"id\": 858529,\n" +
-                "        \"template\": \"carousel\",\n" +
-                "        \"trackingCode\": \"AF9908602\",\n" +
-                "        \"width\": \"240\",\n" +
-                "        \"height\": \"580\"\n" +
-                "      });\n" +
-                "    </script>\n" +
-                "  </div>\n" +
-                "\n" +
-                "  <!-- ✅ 3번 광고 (banner, 가로형 배너) -->\n" +
-                "  <div id=\"ad-banner\">\n" +
-                "    <script>\n" +
-                "      new PartnersCoupang.G({\n" +
-                "        \"id\": 858545,\n" +
-                "        \"template\": \"banner\",\n" +
-                "        \"trackingCode\": \"AF9908602\",\n" +
-                "        \"width\": \"320\",\n" +
-                "        \"height\": \"100\"\n" +
-                "      });\n" +
-                "    </script>\n" +
-                "  </div>\n" +
-                "\n" +
-                "</body>\n" +
-                "</html>";
+        // application.properties에서 설정된 광고 URL 로드
+        String adUrl = getAdUrl();
 
-        webEngine.loadContent(htmlContent);
+        // 광고 URL 로드
+        webEngine.load(adUrl);
     }
 
 
@@ -252,8 +198,14 @@ public class BibleToPPTController {
             if (!currentInput.isEmpty()) {
                 if (bibleVerseValidator.validate(currentInput)) {
                     if (bibleVerseValidator.verseExists(currentInput)) {
-                        addVerseToInput(currentInput);
-                        inputField.clear();
+                        VerseItem newItem = verseManagementService.addVerse(currentInput);
+                        if (newItem != null) {
+                            // UI에 구절 항목 추가
+                            addVerseItemToUI(newItem);
+                            inputField.clear();
+                            // 미리보기 업데이트
+                            updatePreview();
+                        }
                     } else {
                         showAlert("유효하지 않은 구절", "입력한 성경 구절이 존재하지 않습니다.");
                     }
@@ -385,19 +337,11 @@ public class BibleToPPTController {
      * @param item 제거할 구절 항목
      */
     private void removeVerse(VerseItem item) {
-        // 목록에서 항목 제거
-        verseItems.remove(item);
-
-        // 위치 정보 업데이트
-        for (int i = 0; i < verseItems.size(); i++) {
-            verseItems.get(i).setPosition(i);
-        }
+        // 서비스를 통해 구절 제거
+        verseManagementService.removeVerse(item);
 
         // UI 업데이트
         updateVerseManagementList();
-
-        // 현재 구절 문자열 업데이트
-        updateCurrentVerses();
 
         // 미리보기 업데이트
         updatePreview();
@@ -409,21 +353,10 @@ public class BibleToPPTController {
      * @param item 이동할 구절 항목
      */
     private void moveVerseUp(VerseItem item) {
-        int position = item.getPosition();
-        if (position > 0) {
-            // 위치 교환
-            VerseItem upperItem = verseItems.get(position - 1);
-            item.setPosition(position - 1);
-            upperItem.setPosition(position);
-
-            // 목록 재정렬
-            FXCollections.sort(verseItems, (a, b) -> Integer.compare(a.getPosition(), b.getPosition()));
-
+        // 서비스를 통해 구절 위로 이동
+        if (verseManagementService.moveVerseUp(item)) {
             // UI 업데이트
             updateVerseManagementList();
-
-            // 현재 구절 문자열 업데이트
-            updateCurrentVerses();
 
             // 미리보기 업데이트
             updatePreview();
@@ -436,21 +369,10 @@ public class BibleToPPTController {
      * @param item 이동할 구절 항목
      */
     private void moveVerseDown(VerseItem item) {
-        int position = item.getPosition();
-        if (position < verseItems.size() - 1) {
-            // 위치 교환
-            VerseItem lowerItem = verseItems.get(position + 1);
-            item.setPosition(position + 1);
-            lowerItem.setPosition(position);
-
-            // 목록 재정렬
-            FXCollections.sort(verseItems, (a, b) -> Integer.compare(a.getPosition(), b.getPosition()));
-
+        // 서비스를 통해 구절 아래로 이동
+        if (verseManagementService.moveVerseDown(item)) {
             // UI 업데이트
             updateVerseManagementList();
-
-            // 현재 구절 문자열 업데이트
-            updateCurrentVerses();
 
             // 미리보기 업데이트
             updatePreview();
@@ -761,6 +683,9 @@ public class BibleToPPTController {
             titleSlideCheckBox.setSelected(Boolean.parseBoolean(titleSlideIncluded));
         }
 
+        // Slide Size Option
+        initializeSizeComboBox();
+
         // Font Option
         initializeFontComboBox();
 
@@ -794,6 +719,34 @@ public class BibleToPPTController {
     private void updateTitleSlideSetting(boolean isSelected) {
         // 새로운 선택 상태를 문자열로 변환하여 설정 값을 업데이트
         settingsManager.saveSetting(new Settings("title_slide", String.valueOf(isSelected)));
+    }
+
+    /**
+     * 슬라이드 크기 ComboBox를 초기화합니다.
+     * SlideSizeType 열거형에 정의된 모든 슬라이드 크기 옵션을 추가하고,
+     * 사용자의 이전 선택 값을 로드하거나 기본값을 설정합니다.
+     */
+    private void initializeSizeComboBox() {
+        // 슬라이드 크기 옵션 추가 (SlideSizeType 열거형에 정의된 모든 옵션)
+        ObservableList<String> slideSizes = FXCollections.observableArrayList(
+            "16:9", "4:3", "16:10", "A4"
+        );
+        sizeComboBox.setItems(slideSizes);
+
+        // 기본 슬라이드 크기 설정
+        String savedSlideSize = settingsManager.getSetting("slide_size");
+        if (savedSlideSize != null) {
+            sizeComboBox.getSelectionModel().select(savedSlideSize);
+        } else {
+            sizeComboBox.getSelectionModel().select("16:9"); // 기본값
+        }
+
+        // 슬라이드 크기 변경 시 설정 저장
+        sizeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                settingsManager.saveSetting(new Settings("slide_size", newValue));
+            }
+        });
     }
 
     private void initializeFontComboBox() {
