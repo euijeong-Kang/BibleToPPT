@@ -85,7 +85,20 @@ public class SQLiteConnector implements ISQLiteConnector {
             if (connection == null || connection.isClosed() || !connection.isValid(1)) {
                 String dbPath = getDatabaseFile().getAbsolutePath();
                 String url = "jdbc:sqlite:" + dbPath;
-                connection = DriverManager.getConnection(url);
+
+                // Set connection properties for better performance
+                java.util.Properties props = new java.util.Properties();
+                props.setProperty("journal_mode", "WAL");  // Write-Ahead Logging for better concurrency
+                props.setProperty("synchronous", "NORMAL"); // Less durability but better performance
+                props.setProperty("cache_size", "5000");   // Larger cache for better performance
+
+                connection = DriverManager.getConnection(url, props);
+
+                // Set pragmas for better performance
+                try (java.sql.Statement stmt = connection.createStatement()) {
+                    stmt.execute("PRAGMA temp_store = MEMORY");  // Store temp tables in memory
+                    stmt.execute("PRAGMA mmap_size = 30000000"); // Memory-mapped I/O
+                }
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "데이터베이스 연결 가져오기 중 오류 발생", e);

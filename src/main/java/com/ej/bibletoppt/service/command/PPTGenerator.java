@@ -28,7 +28,7 @@ public class PPTGenerator implements IPPTGenerator {
                 throw new IllegalArgumentException("검색된 성경 구절이 없습니다.");
             }
 
-            PresentationStyle style = new PresentationStyle(request.selectedSize(), request.selectedFont(), request.titleSlideOption());
+            PresentationStyle style = new PresentationStyle(request.selectedSize(), request.selectedFont(), request.titleSlideOption(), request.bodyFontSize());
 
             // Presentation 객체 생성 및 슬라이드 크기 설정
             Presentation presentation = new Presentation(style);

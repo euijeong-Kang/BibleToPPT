@@ -4,7 +4,10 @@ import com.ej.bibletoppt.service.IBibleVerseValidator;
 import com.ej.bibletoppt.service.query.ISearchBible;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -17,6 +20,12 @@ public class BibleVerseValidator implements IBibleVerseValidator {
     private static final Logger LOGGER = Logger.getLogger(BibleVerseValidator.class.getName());
 
     private ISearchBible searchBible;
+
+    // Caches for improved performance
+    private final Map<String, Boolean> validationCache = new ConcurrentHashMap<>();
+    private final Map<String, String> normalizationCache = new ConcurrentHashMap<>();
+    private final Map<String, Boolean> verseExistsCache = new ConcurrentHashMap<>();
+    private static final int CACHE_SIZE_LIMIT = 200;
 
     // 성경 책 이름 (한글 전체 이름)
     private static final String[] koreanFullNames = {
@@ -105,13 +114,29 @@ public class BibleVerseValidator implements IBibleVerseValidator {
      * @return 입력된 문자열이 올바른 형식이면 true, 그렇지 않으면 false
      */
     public boolean validate(String input) {
+        // Check cache first
+        if (validationCache.containsKey(input)) {
+            return validationCache.get(input);
+        }
+
+        boolean isValid = true;
         String[] parts = input.split(",");
         for (String part : parts) {
             if (!validateSinglePart(part.trim())) {
-                return false;
+                isValid = false;
+                break;
             }
         }
-        return true;
+
+        // Add to cache
+        if (validationCache.size() >= CACHE_SIZE_LIMIT) {
+            // Remove a random entry if cache is full
+            String keyToRemove = validationCache.keySet().iterator().next();
+            validationCache.remove(keyToRemove);
+        }
+        validationCache.put(input, isValid);
+
+        return isValid;
     }
 
     private boolean validateSinglePart(String part) {
@@ -202,6 +227,11 @@ public class BibleVerseValidator implements IBibleVerseValidator {
             return input;
         }
 
+        // Check cache first
+        if (normalizationCache.containsKey(input)) {
+            return normalizationCache.get(input);
+        }
+
         StringBuilder result = new StringBuilder();
         String[] parts = input.split(",");
 
@@ -215,7 +245,17 @@ public class BibleVerseValidator implements IBibleVerseValidator {
             }
         }
 
-        return result.toString();
+        String normalized = result.toString();
+
+        // Add to cache
+        if (normalizationCache.size() >= CACHE_SIZE_LIMIT) {
+            // Remove a random entry if cache is full
+            String keyToRemove = normalizationCache.keySet().iterator().next();
+            normalizationCache.remove(keyToRemove);
+        }
+        normalizationCache.put(input, normalized);
+
+        return normalized;
     }
 
     private String normalizeSinglePart(String part) {
@@ -452,13 +492,28 @@ public class BibleVerseValidator implements IBibleVerseValidator {
             return false;
         }
 
+        // Check cache first
+        if (verseExistsCache.containsKey(input)) {
+            return verseExistsCache.get(input);
+        }
+
         try {
             // 정규화된 입력값으로 검색
             String normalizedInput = normalize(input);
             List<String> verses = searchBible.searchVerses(normalizedInput);
 
             // 검색 결과가 있으면 해당 구절이 존재함
-            return !verses.isEmpty();
+            boolean exists = !verses.isEmpty();
+
+            // Add to cache
+            if (verseExistsCache.size() >= CACHE_SIZE_LIMIT) {
+                // Remove a random entry if cache is full
+                String keyToRemove = verseExistsCache.keySet().iterator().next();
+                verseExistsCache.remove(keyToRemove);
+            }
+            verseExistsCache.put(input, exists);
+
+            return exists;
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "성경 구절 존재 여부 확인 중 오류 발생", e);
             return false;

@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -15,12 +17,21 @@ public class SearchBible implements ISearchBible {
     private static final Logger LOGGER = Logger.getLogger(SearchBible.class.getName());
 
     private final ISQLiteConnector connector;
+    private final Map<String, List<String>> verseCache;
+    private static final int CACHE_SIZE_LIMIT = 100;
 
     public SearchBible(ISQLiteConnector connector) {
         this.connector = connector;
+        this.verseCache = new ConcurrentHashMap<>();
     }
 
     public List<String> searchVerses(String input) {
+        // Check cache first
+        if (verseCache.containsKey(input)) {
+            LOGGER.fine("Cache hit for: " + input);
+            return new ArrayList<>(verseCache.get(input));
+        }
+
         List<String> verses = new ArrayList<>();
 
         try (Connection connection = connector.getConnection()) {
@@ -57,6 +68,17 @@ public class SearchBible implements ISearchBible {
                         }
                     }
                 }
+            }
+
+            // Add to cache if not empty
+            if (!verses.isEmpty()) {
+                // Manage cache size
+                if (verseCache.size() >= CACHE_SIZE_LIMIT) {
+                    // Remove a random entry if cache is full
+                    String keyToRemove = verseCache.keySet().iterator().next();
+                    verseCache.remove(keyToRemove);
+                }
+                verseCache.put(input, new ArrayList<>(verses));
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "성경 구절 검색 중 오류 발생", e);

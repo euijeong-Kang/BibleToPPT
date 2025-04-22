@@ -29,6 +29,10 @@ public class PresentationStyle {
     }
 
     public PresentationStyle(SlideSizeType slideSizeType, String fontFamily, boolean titleOption) {
+        this(slideSizeType, fontFamily, titleOption, 65.0); // 기본 글자 크기 65로 설정
+    }
+
+    public PresentationStyle(SlideSizeType slideSizeType, String fontFamily, boolean titleOption, double bodyFontSize) {
         this.slideSizeType = slideSizeType;
         this.fontFamily = fontFamily;
         this.titleOption = titleOption;
@@ -37,7 +41,7 @@ public class PresentationStyle {
         this.backgroundColor = Color.decode("#000000"); // 검은색 배경
         this.textColor = Color.decode("#FFFFFF"); // 흰색 텍스트
         this.titleFontSize = 54;
-        this.bodyFontSize = 65;
+        this.bodyFontSize = bodyFontSize;
 
         // 설정 파일에서 값 로드 시도
         try {
@@ -45,13 +49,12 @@ public class PresentationStyle {
             String bgColorStr = settingsManager.getSetting("backgroundColor");
             String textColorStr = settingsManager.getSetting("textColor");
             String titleFontSizeStr = settingsManager.getSetting("titleFontSize");
-            String bodyFontSizeStr = settingsManager.getSetting("bodyFontSize");
 
             // null이 아닌 경우에만 설정값 적용
             if (bgColorStr != null) this.backgroundColor = Color.decode(bgColorStr);
             if (textColorStr != null) this.textColor = Color.decode(textColorStr);
             if (titleFontSizeStr != null) this.titleFontSize = Double.parseDouble(titleFontSizeStr);
-            if (bodyFontSizeStr != null) this.bodyFontSize = Double.parseDouble(bodyFontSizeStr);
+            // bodyFontSize는 매개변수로 받은 값을 사용하므로 설정에서 로드하지 않음
         } catch (Exception e) {
             // 설정 로드 실패 시 기본값 유지
             LOGGER.log(Level.WARNING, "스타일 설정 로드 중 오류 발생", e);
