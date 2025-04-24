@@ -9,6 +9,7 @@ import com.ej.bibletoppt.infrastructure.di.ServiceLocator;
 import com.ej.bibletoppt.service.IBibleVerseValidator;
 import com.ej.bibletoppt.service.IPreviewService;
 import com.ej.bibletoppt.service.IVerseManagementService;
+import com.ej.bibletoppt.service.PreviewInfo;
 import com.ej.bibletoppt.service.command.IPPTGenerator;
 import com.ej.bibletoppt.service.query.ISearchBible;
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ import java.net.URI;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -79,8 +80,6 @@ public class BibleToPPTController {
     private final IVerseManagementService verseManagementService;
     private final IPreviewService previewService;
 
-    private String currentVerses = "";
-    private final ObservableList<VerseItem> verseItems = FXCollections.observableArrayList();
 
     public BibleToPPTController() {
         // 서비스 로케이터에서 서비스 가져오기
@@ -217,34 +216,6 @@ public class BibleToPPTController {
     }
 
 
-    private void addVerseToInput(String verse) {
-        // 정규화된 구절로 변환
-        String normalizedVerse = bibleVerseValidator.normalize(verse);
-
-        // 중복 검사
-        for (VerseItem item : verseItems) {
-            if (item.getText().equals(normalizedVerse)) {
-                return; // 이미 존재하는 구절이면 추가하지 않음
-            }
-        }
-
-        // 새 구절 항목 생성 및 추가
-        int position = verseItems.size();
-        VerseItem newItem = new VerseItem(normalizedVerse, position);
-        verseItems.add(newItem);
-
-        // UI에 구절 항목 추가
-        addVerseItemToUI(newItem);
-
-        // 현재 구절 문자열 업데이트
-        updateCurrentVerses();
-
-        // 입력 필드 초기화
-        inputField.clear();
-
-        // 미리보기 영역 업데이트
-        updatePreview();
-    }
 
     /**
      * 구절 항목을 UI에 추가합니다.
@@ -387,28 +358,11 @@ public class BibleToPPTController {
         verseManagementList.getChildren().clear();
 
         // 항목 다시 추가
-        for (VerseItem item : verseItems) {
+        for (VerseItem item : verseManagementService.getVerseItems()) {
             addVerseItemToUI(item);
         }
     }
 
-    /**
-     * 현재 구절 문자열을 업데이트합니다.
-     */
-    private void updateCurrentVerses() {
-        if (verseItems.isEmpty()) {
-            currentVerses = "";
-        } else {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < verseItems.size(); i++) {
-                if (i > 0) {
-                    sb.append(", ");
-                }
-                sb.append(verseItems.get(i).getText());
-            }
-            currentVerses = sb.toString();
-        }
-    }
 
     /**
      * 미리보기 영역을 현재 선택된 구절로 업데이트합니다.
@@ -433,7 +387,7 @@ public class BibleToPPTController {
         javafx.scene.layout.StackPane slideBackground = new javafx.scene.layout.StackPane();
         slideBackground.setPrefSize(width, height);
         slideBackground.setStyle("-fx-background-color: #000000; -fx-background-radius: 8; " +
-                                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);");
+                               "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 5);");
 
         // 슬라이드 내용을 담을 컨테이너
         javafx.scene.layout.VBox slideContent = new javafx.scene.layout.VBox();
@@ -443,6 +397,7 @@ public class BibleToPPTController {
         slideContent.setPrefWidth(width - 20);
         slideContent.setMaxWidth(width - 20);
 
+        String currentVerses = verseManagementService.getCurrentVerses();
         if (currentVerses.isEmpty()) {
             // 구절이 없는 경우 안내 메시지 표시
             javafx.scene.layout.VBox emptyContent = new javafx.scene.layout.VBox();
@@ -463,24 +418,16 @@ public class BibleToPPTController {
             if (parts.length > 0) {
                 // 첫 번째 구절의 참조 부분을 제목으로 표시
                 String reference = parts[0].trim();
+
+                // 미리보기 정보 가져오기
+                PreviewInfo previewInfo = previewService.getPreviewInfo(reference);
+
+                // 제목 표시
                 javafx.scene.control.Label titleLabel = new javafx.scene.control.Label(reference);
                 titleLabel.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;");
                 titleLabel.setWrapText(true);
                 titleLabel.setPrefWidth(width - 80);
                 slideContent.getChildren().add(titleLabel);
-
-                // 첫 번째 구절의 실제 내용을 가져오기
-                List<String> verseTexts = searchBible.searchVerses(reference);
-                String verseContent = "";
-
-                if (!verseTexts.isEmpty()) {
-                    // 첫 번째 구절의 내용 추출 (& 이후의 텍스트)
-                    String fullVerse = verseTexts.get(0);
-                    String[] verseParts = fullVerse.split("&", 2);
-                    if (verseParts.length > 1) {
-                        verseContent = verseParts[1].trim();
-                    }
-                }
 
                 // 구절 내용 표시를 위한 스크롤 패널
                 javafx.scene.control.ScrollPane scrollPane = new javafx.scene.control.ScrollPane();
@@ -493,8 +440,8 @@ public class BibleToPPTController {
                 versesContainer.setSpacing(15);
 
                 // 첫 번째 구절의 실제 내용 표시
-                if (!verseContent.isEmpty()) {
-                    javafx.scene.control.Label contentLabel = new javafx.scene.control.Label(verseContent);
+                if (!previewInfo.isEmpty()) {
+                    javafx.scene.control.Label contentLabel = new javafx.scene.control.Label(previewInfo.content());
                     contentLabel.setStyle("-fx-font-size: 18; -fx-font-weight: normal; -fx-text-fill: white; -fx-wrap-text: true;");
                     contentLabel.setWrapText(true);
                     contentLabel.setPrefWidth(width - 100);
@@ -521,12 +468,11 @@ public class BibleToPPTController {
      */
     @FXML
     protected void onClearButtonClick() {
-        // 구절 목록 초기화
-        verseItems.clear();
-        verseManagementList.getChildren().clear();
+        // 서비스를 통해 모든 구절 제거
+        verseManagementService.clearVerses();
 
-        // 현재 구절 문자열 초기화
-        currentVerses = "";
+        // UI 업데이트
+        verseManagementList.getChildren().clear();
 
         // 입력 필드 초기화
         inputField.clear();
@@ -541,7 +487,7 @@ public class BibleToPPTController {
     @FXML
     protected void onGeneratePPTButtonClick() {
         // 입력 유효성 검사
-        String bibleVerseInput = currentVerses;
+        String bibleVerseInput = verseManagementService.getCurrentVerses();
 
         if (!checkValid(bibleVerseInput)) {
             showAlert("입력 오류", "입력된 성경 구절 형식이 올바르지 않습니다. 입력값을 확인해주세요. 아래와 같은 형식 중 하나를 사용하세요:\n\n"
@@ -603,11 +549,8 @@ public class BibleToPPTController {
         }
 
         // 구절 목록 초기화
-        verseItems.clear();
+        verseManagementService.clearVerses();
         verseManagementList.getChildren().clear();
-
-        // 현재 구절 문자열 초기화
-        currentVerses = "";
 
         // 입력 필드 초기화
         inputField.clear();
@@ -702,11 +645,8 @@ public class BibleToPPTController {
 
         // 기본 글자 크기 설정
         String savedFontSize = settingsManager.getSetting("body_font_size");
-        if (savedFontSize != null) {
-            fontSizeComboBox.getSelectionModel().select(savedFontSize);
-        } else {
-            fontSizeComboBox.getSelectionModel().select("65"); // 기본값
-        }
+        // 기본값
+        fontSizeComboBox.getSelectionModel().select(Objects.requireNonNullElse(savedFontSize, "65"));
 
         // 글자 크기 변경 시 설정 저장
         fontSizeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -735,11 +675,8 @@ public class BibleToPPTController {
 
         // 기본 슬라이드 크기 설정
         String savedSlideSize = settingsManager.getSetting("slide_size");
-        if (savedSlideSize != null) {
-            sizeComboBox.getSelectionModel().select(savedSlideSize);
-        } else {
-            sizeComboBox.getSelectionModel().select("16:9"); // 기본값
-        }
+        // 기본값
+        sizeComboBox.getSelectionModel().select(Objects.requireNonNullElse(savedSlideSize, "16:9"));
 
         // 슬라이드 크기 변경 시 설정 저장
         sizeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
